@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileDown, QrCode } from 'lucide-react';
+import { Menu, X, FileDown } from 'lucide-react';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 
 interface NavbarProps {
@@ -27,7 +27,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
     { label: 'Experience', href: '#experience' },
     { label: 'Resume', href: '#resume' },
     { label: 'GitHub', href: '#github' },
-    { label: 'QR Code', href: '#qrcode' },
     { label: 'Contact', href: '#contact' },
   ];
 
@@ -109,17 +108,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
 
         {/* Action Buttons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <a
-            href="#qrcode"
-            className="btn btn-secondary btn-sm"
-            style={{ display: 'none' }}
-            id="nav-qr-btn"
-            title="Scan QR Code"
-          >
-            <QrCode size={15} color="#E87524" />
-            <span className="hide-on-mobile">QR</span>
-          </a>
-
           <a
             href="/prince-gour-resume.pdf"
             download="prince-gour-resume.pdf"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Mail, QrCode } from 'lucide-react';
+import { ArrowUp, Mail } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 
@@ -88,13 +88,6 @@ export const Footer: React.FC = () => {
               title="Email"
             >
               <Mail size={16} /> <span>Email</span>
-            </a>
-            <a
-              href="#qrcode"
-              style={{ color: '#E87524', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 500 }}
-              title="Portfolio QR Code"
-            >
-              <QrCode size={16} /> <span>QR Code</span>
             </a>
           </div>
 

@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:host": "vite --host",
+    "generate:qr": "node scripts/generateQrCode.cjs",
     "build:resume": "node scripts/generatePdfResume.cjs",
     "build:qr": "node scripts/generateQrCode.cjs",
     "build": "node scripts/generatePdfResume.cjs && node scripts/generateQrCode.cjs && tsc -b && vite build",

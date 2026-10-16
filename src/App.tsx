@@ -9,7 +9,6 @@ import { Certifications } from './components/Certifications';
 import { Experience } from './components/Experience';
 import { ResumeSection } from './components/ResumeSection';
 import { GithubSection } from './components/GithubSection';
-import { QRCodeSection } from './components/QRCodeSection';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
@@ -27,7 +26,6 @@ export const App: React.FC = () => {
       'experience',
       'resume',
       'github',
-      'qrcode',
       'contact'
     ];
 
@@ -66,7 +64,6 @@ export const App: React.FC = () => {
         <Experience />
         <ResumeSection />
         <GithubSection />
-        <QRCodeSection />
         <Contact />
       </main>
       <Footer />

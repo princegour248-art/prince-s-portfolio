@@ -42,13 +42,11 @@ Built strictly according to the **Orange-and-Black** minimal editorial design sy
    - Directly fetches Prince's public repositories from `api.github.com/users/princegour248-art/repos`
    - Real star counts, fork counts, and primary language indicators
    - Fallback metadata if offline or rate-limited
-10. **Automatic Portfolio QR Code**:
-    - Dedicated "Scan to View My Portfolio" section
-    - Real scannable high-contrast black-and-white QR code on white background
-    - Download high-res PNG (512x512 / 1024x1024) button
-    - Download vector SVG button
-    - Copy portfolio link button with feedback toast
-    - Print-ready previews (Business Card & Resume Badge formats)
+10. **Standalone Scannable Portfolio QR Code**:
+    - High-contrast, scannable QR code generated as standalone assets (`Prince_Gour_Portfolio_QR.png` on Desktop and project root)
+    - Automatically encodes the canonical public portfolio URL
+    - Tested for instant recognition via smartphone cameras (Google Lens / iOS Camera)
+    - Ready to place on business cards, print resumes, or share directly
 11. **Contact Section**:
     - Direct verified email (`mailto:`)
     - Validated form preparing pre-formatted email inquiries
@@ -93,15 +91,13 @@ prince-gour-portfolio/
 │   │   ├── Experience.tsx      # Cognifyz & CodeAlpha internships
 │   │   ├── ResumeSection.tsx   # ATS resume preview & download
 │   │   ├── GithubSection.tsx   # Live GitHub API repos
-│   │   ├── QRCodeSection.tsx   # Scannable QR & print-ready layouts
 │   │   ├── Contact.tsx         # Validated message form & direct email
 │   │   ├── Footer.tsx          # Back to top & copyright
 │   │   └── icons.tsx           # GitHub & LinkedIn SVG icons
 │   ├── data/
 │   │   └── portfolioData.ts    # Central editable configuration
 │   ├── utils/
-│   │   ├── generateResumePdf.ts# Client-side dynamic PDF generation
-│   │   └── qrCodeHelper.ts     # QR code download helpers
+│   │   └── generateResumePdf.ts# Client-side dynamic PDF generation
 │   ├── App.tsx                 # Root layout & section intersection observer
 │   ├── index.css               # Orange-and-black design tokens
 │   └── main.tsx
@@ -169,12 +165,18 @@ node scripts/verifyPortfolio.cjs
    ```
    https://princegour248-art.github.io/portfolio/
    ```
-6. The QR code on your website already points directly to this canonical GitHub Pages URL!
+6. The generated QR codes automatically encode this canonical URL so scanning them directs immediately to your live site!
 
 ---
 
-## 📱 9. Automatic QR Code Usage
+## 📱 9. Portfolio QR Code Usage
 
-- **Destination**: Encodes canonical public HTTPS URL (`https://princegour248-art.github.io/portfolio`).
-- **Scanning**: Open any standard smartphone camera app (iOS Camera or Android Google Lens) and point it at the QR code on screen or printed material. It opens the portfolio directly.
-- **Downloading**: Click **"Download QR Code (PNG)"** for high-resolution graphics, or **"Download Vector (SVG)"** for sharp print scaling on business cards and resumes.
+- **Standalone QR Files**:
+  - `Desktop/Prince_Gour_Portfolio_QR.png` (High-res 1024x1024 PNG saved directly to your Desktop)
+  - `Desktop/Prince_Gour_Portfolio_QR_WiFi_Test.png` (For instant local Wi-Fi testing)
+  - `public/portfolio-qr.png` & `public/portfolio-qr.svg`
+- **Scanning**: Open any phone camera (Google Lens / iPhone Camera) and point it at `Prince_Gour_Portfolio_QR.png` — it prompts to open the portfolio URL immediately.
+- **Custom URL Regeneration**: To regenerate the QR code for a custom domain or Vercel URL:
+  ```bash
+  npm run generate:qr https://your-custom-portfolio-url.com
+  ```
