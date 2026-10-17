@@ -57,6 +57,8 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -68,6 +70,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 ::selection {
@@ -89,6 +92,13 @@ button {
 
 input, textarea, select {
   font-family: inherit;
+}
+
+/* Prevent auto-zoom on mobile inputs in Android Chrome / iOS Safari */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
 }
 
 /* Accessibility Focus Outline */
@@ -223,17 +233,71 @@ input, textarea, select {
   font-size: 15px;
 }
 
-/* Cards & Surfaces */
+/* =========================================================
+   PORTFOLIO-WIDE BORDER GLOW ON HOVER NEAR EDGES
+   ========================================================= */
+.card,
+.project-card-grid,
+.skill-flip-front,
+.skill-flip-back,
+.reactbits-folder-body,
+.resume-card,
+.github-repo-card {
+  position: relative;
+  transition: border-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Cursor-responsive radial edge spotlight on hover near edges */
+.card::before,
+.project-card-grid::before,
+.skill-flip-front::before,
+.skill-flip-back::before,
+.resume-card::before,
+.github-repo-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    280px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgba(255, 106, 0, 0.95) 0%,
+    rgba(255, 106, 0, 0.35) 40%,
+    transparent 75%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 2;
+}
+
+.card:hover::before,
+.project-card-grid:hover::before,
+.skill-flip-front:hover::before,
+.skill-flip-back:hover::before,
+.resume-card:hover::before,
+.github-repo-card:hover::before {
+  opacity: 1;
+}
+
 .card {
   background-color: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 24px;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
-.card:hover {
-  border-color: #404040;
+/* Subtle overall edge glow when hovered */
+.card:hover,
+.project-card-grid:hover,
+.resume-card:hover,
+.github-repo-card:hover {
+  border-color: rgba(255, 106, 0, 0.45);
+  box-shadow: 0 0 16px rgba(255, 106, 0, 0.2);
 }
 
 /* Badges */
@@ -248,12 +312,43 @@ input, textarea, select {
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   color: var(--text-secondary);
+  transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.badge:hover {
+  border-color: #FF6A00 !important;
+  box-shadow: 0 0 10px rgba(255, 106, 0, 0.4) !important;
 }
 
 .badge-orange {
   background: var(--orange-subtle);
   border-color: var(--orange-border);
   color: var(--primary-orange);
+}
+
+/* Buttons Glow */
+.btn-secondary:hover,
+.btn-outline:hover,
+button[type="button"]:hover,
+button[type="submit"]:hover {
+  border-color: #FF6A00 !important;
+  box-shadow: 0 0 14px rgba(255, 106, 0, 0.42) !important;
+}
+
+/* Form Inputs Glow */
+input:hover,
+textarea:hover,
+select:hover,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #FF6A00 !important;
+  box-shadow: 0 0 14px rgba(255, 106, 0, 0.35) !important;
+}
+
+.section-tag:hover {
+  border-color: #FF6A00 !important;
+  box-shadow: 0 0 14px rgba(255, 106, 0, 0.45) !important;
 }
 
 /* Custom Scrollbar */
@@ -274,3 +369,11 @@ input, textarea, select {
 ::-webkit-scrollbar-thumb:hover {
   background: #3D3D3D;
 }
+
+
+/* Ensure any remaining or nested elements are completely visible */
+.reveal-on-scroll {
+  opacity: 1 !important;
+  transform: none !important;
+}
+

@@ -153,7 +153,7 @@ function generateResume() {
   doc.setFont('Helvetica', 'bold');
   doc.setFontSize(9.5);
   doc.setTextColor(...darkColor);
-  doc.text('Bachelor of Computer Applications (BCA)', margin, y);
+  doc.text('Bachelor of Computer Applications (BCA) — ITM, GIDA, Gorakhpur', margin, y);
   doc.setFont('Helvetica', 'normal');
   doc.setFontSize(8.5);
   doc.setTextColor(...lightGray);

@@ -1,0 +1,764 @@
+/* =========================================================
+   REACT BITS INTERACTIVE CAREER ARCHIVE (FOLDER COMPONENT)
+   Theme: Obsidian & Orange
+   - Background:        #0B0B0B
+   - Folder Body:       #141414 / #161616
+   - Primary Orange:    #FF6A00
+   - Secondary Orange:  #FF8C42
+   - Main Text:         #F5F5F5
+   - Muted Text:        #A1A1AA
+   - Borders:           #262626
+   ========================================================= */
+
+.experience-section {
+  background-color: #0B0B0B;
+  color: #F5F5F5;
+  border-bottom: 1px solid #222222;
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0;
+}
+
+/* Subtle fade-and-rise header reveal */
+.experience-header-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.experience-header-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-header-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* =========================================================
+   CAREER FOLDERS GRID (DESKTOP 2-COLUMN, MOBILE 1-COLUMN)
+   ========================================================= */
+.career-folders-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px;
+  align-items: start;
+  margin-top: 24px;
+}
+
+@media (max-width: 900px) {
+  .career-folders-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* =========================================================
+   REACT BITS 3D PHYSICAL FOLDER COMPONENT
+   ========================================================= */
+.career-folder-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.career-folder-wrapper:hover {
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-folder-wrapper:hover {
+    transform: none;
+  }
+}
+
+/* 3D Physical Folder Structure */
+.career-folder-body {
+  position: relative;
+  width: 100%;
+  height: 230px;
+  perspective: 1000px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.career-folder-body:focus-visible {
+  outline: 2px solid #FF6A00;
+  outline-offset: 4px;
+  border-radius: 14px;
+}
+
+/* Top Folder Tab */
+.career-folder-tab {
+  position: absolute;
+  top: -18px;
+  left: 20px;
+  height: 20px;
+  padding: 0 16px;
+  background-color: #171717;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border: 1px solid #2B2B2B;
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+  transition: all 0.25s ease;
+}
+
+.career-folder-wrapper.is-open .career-folder-tab {
+  background-color: #1F1712;
+  border-color: rgba(255, 106, 0, 0.45);
+}
+
+.career-folder-tab-stripe {
+  width: 12px;
+  height: 2px;
+  background-color: #FF6A00;
+  border-radius: 1px;
+}
+
+.career-folder-tab-title {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+  color: #FF8C42;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Folder Back Plate */
+.career-folder-backplate {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #1C1C1C 0%, #121212 100%);
+  border: 1px solid #2B2B2B;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+}
+
+.career-folder-wrapper:hover .career-folder-backplate {
+  border-color: #383838;
+}
+
+.career-folder-wrapper.is-open .career-folder-backplate {
+  border-color: rgba(255, 106, 0, 0.35);
+}
+
+/* Interior Pocket Slot */
+.career-folder-pocket-interior {
+  position: absolute;
+  top: 18px;
+  left: 14px;
+  right: 14px;
+  height: 100px;
+  background: #0A0A0A;
+  border-radius: 8px;
+  border: 1px solid #202020;
+  overflow: hidden;
+}
+
+.career-folder-pocket-glow {
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  right: 15%;
+  height: 24px;
+  background: radial-gradient(ellipse at bottom, rgba(255, 106, 0, 0.2) 0%, transparent 70%);
+}
+
+/* Animated Document Sheet (Paper inside folder) */
+.career-folder-paper-sheet {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  right: 24px;
+  height: 150px;
+  background: linear-gradient(180deg, #262626 0%, #1B1B1B 100%);
+  border: 1px solid #383838;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  justifyContent: space-between;
+  z-index: 3;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(0);
+}
+
+.career-folder-wrapper.is-open .career-folder-paper-sheet {
+  transform: translateY(-28px);
+  box-shadow: 0 -8px 24px rgba(255, 106, 0, 0.15);
+  border-color: #FF8C42;
+}
+
+.career-folder-paper-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #333333;
+  padding-bottom: 8px;
+}
+
+.career-folder-paper-ref {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  color: #FF8C42;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.career-folder-paper-badge {
+  font-size: 9.5px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(255, 106, 0, 0.12);
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  color: #FF6A00;
+  font-family: var(--font-mono, monospace);
+  font-weight: 600;
+}
+
+.career-folder-paper-preview-text {
+  font-size: 11.5px;
+  color: #D4D4D8;
+  line-height: 1.45;
+  font-style: italic;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.career-folder-paper-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #71717A;
+  font-family: var(--font-mono, monospace);
+}
+
+/* 3D Front Flap (Rotates open forward on click) */
+.career-folder-frontflap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 170px;
+  background: linear-gradient(180deg, #1A1A1A 0%, #111111 100%);
+  border: 1px solid #2B2B2B;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  border-top-right-radius: 14px;
+  border-top-left-radius: 4px;
+  z-index: 5;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justifyContent: space-between;
+  transform-origin: bottom center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+}
+
+.career-folder-wrapper:hover .career-folder-frontflap {
+  border-color: #3D3D3D;
+}
+
+.career-folder-wrapper.is-open .career-folder-frontflap {
+  transform: perspective(900px) rotateX(-32deg);
+  border-color: rgba(255, 106, 0, 0.6);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 106, 0, 0.25);
+}
+
+/* Front Flap Content */
+.career-folder-frontflap-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.career-folder-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #201710;
+  border: 1px solid rgba(255, 106, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FF6A00;
+  flex-shrink: 0;
+}
+
+.career-folder-frontflap-title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.career-folder-company-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #F5F5F5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+}
+
+.career-folder-wrapper.is-open .career-folder-company-name {
+  color: #FF8C42;
+}
+
+.career-folder-role-title {
+  font-size: 12.5px;
+  color: #A1A1AA;
+}
+
+/* Front Flap Bottom Bar */
+.career-folder-frontflap-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #151515;
+  border: 1px solid #242424;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.career-folder-wrapper:hover .career-folder-frontflap-bottom {
+  background-color: rgba(255, 106, 0, 0.08);
+  border-color: rgba(255, 106, 0, 0.3);
+}
+
+.career-folder-cue-text {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #D4D4D8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.career-folder-wrapper:hover .career-folder-cue-text {
+  color: #FF8C42;
+}
+
+.career-folder-status-indicator {
+  font-family: var(--font-mono, monospace);
+  font-size: 10.5px;
+  color: #71717A;
+}
+
+/* =========================================================
+   REVEALED ARCHIVE DOSSIER PANEL (EXPANDS BENEATH FOLDER)
+   ========================================================= */
+.career-archive-drawer {
+  margin-top: 18px;
+  background-color: #131313;
+  border: 1px solid #2B2B2B;
+  border-left: 3.5px solid #FF6A00;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
+  animation: drawerSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes drawerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-archive-drawer {
+    animation: none;
+  }
+}
+
+/* Metadata Bar */
+.archive-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  padding: 10px 14px;
+  background-color: #0A0A0A;
+  border: 1px solid #202020;
+  border-radius: 8px;
+  font-size: 11.5px;
+  color: #A1A1AA;
+}
+
+.archive-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.archive-meta-item strong {
+  color: #F5F5F5;
+  font-weight: 600;
+}
+
+/* Description */
+.archive-description {
+  font-size: 13.5px;
+  color: #A1A1AA;
+  line-height: 1.6;
+}
+
+/* Scope Deliverables List */
+.archive-scope-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.archive-scope-heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #71717A;
+  font-family: var(--font-mono, monospace);
+}
+
+.archive-scope-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.archive-scope-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #D4D4D8;
+  line-height: 1.45;
+}
+
+.archive-scope-item svg {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Tech Tags */
+.archive-tech-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.archive-tech-pill {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background-color: #1A1A1A;
+  border: 1px solid #292929;
+  color: #A1A1AA;
+  font-family: var(--font-mono, monospace);
+}
+
+/* Document Thumbnail & Action Row */
+.archive-document-card {
+  background-color: #0B0B0B;
+  border: 1px solid #262626;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.archive-document-preview-trigger {
+  position: relative;
+  background-color: #050505;
+  border: 1px solid #222222;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 160px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+
+.archive-document-preview-trigger:hover {
+  border-color: #FF6A00;
+}
+
+.archive-doc-thumb {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  object-position: top center;
+  display: block;
+}
+
+.archive-doc-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.archive-document-preview-trigger:hover .archive-doc-overlay {
+  opacity: 1;
+}
+
+.archive-doc-overlay-tag {
+  background-color: #141414;
+  border: 1px solid #FF6A00;
+  color: #F5F5F5;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Action Buttons inside Archive */
+.archive-action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .archive-action-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+.archive-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+}
+
+.archive-btn:focus-visible {
+  outline: 2px solid #FF6A00;
+  outline-offset: 2px;
+}
+
+.archive-btn-primary {
+  background-color: #FF6A00;
+  color: #0B0B0B;
+  font-weight: 700;
+}
+
+.archive-btn-primary:hover {
+  background-color: #FF8C42;
+  box-shadow: 0 4px 14px rgba(255, 106, 0, 0.3);
+}
+
+.archive-btn-outline {
+  background-color: #161616;
+  border-color: #2E2E2E;
+  color: #F5F5F5;
+}
+
+.archive-btn-outline:hover {
+  background-color: #1F1F1F;
+  border-color: #3E3E3E;
+  color: #FF8C42;
+}
+
+/* =========================================================
+   ACCESSIBLE DOCUMENT VIEWER MODAL
+   ========================================================= */
+.document-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.document-modal-dialog {
+  background-color: #111111;
+  border: 1px solid #2B2B2B;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85);
+  animation: modalScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalScaleUp {
+  from {
+    transform: scale(0.97);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.document-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background-color: #161616;
+  border-bottom: 1px solid #262626;
+  gap: 12px;
+}
+
+.document-modal-title-box {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.document-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #F5F5F5;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.document-modal-subtitle {
+  font-size: 11.5px;
+  color: #A1A1AA;
+  font-family: var(--font-mono, monospace);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.document-modal-close-btn {
+  background: transparent;
+  border: 1px solid #2E2E2E;
+  color: #A1A1AA;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.document-modal-close-btn:hover {
+  background-color: #222222;
+  color: #F5F5F5;
+  border-color: #444444;
+}
+
+.document-modal-close-btn:focus-visible {
+  outline: 2px solid #FF6A00;
+}
+
+.document-modal-body {
+  padding: 20px;
+  background-color: #0A0A0A;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 340px;
+  max-height: calc(92vh - 140px);
+}
+
+.document-modal-image {
+  max-width: 100%;
+  max-height: calc(92vh - 170px);
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
+  border: 1px solid #262626;
+}
+
+.document-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background-color: #161616;
+  border-top: 1px solid #262626;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.document-modal-footer-left {
+  font-size: 11.5px;
+  color: #71717A;
+  font-family: var(--font-mono, monospace);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.document-modal-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}

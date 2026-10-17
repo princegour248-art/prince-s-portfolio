@@ -35,23 +35,38 @@ export interface EducationItem {
 }
 
 export interface CertificationItem {
+  id?: string;
   title: string;
   issuer: string;
-  type: 'Course' | 'Certification' | 'Specialization';
-  status: 'Completed' | 'In Progress';
+  type: 'Course' | 'Certification' | 'Specialization' | 'Internship Certificate';
+  status: 'Completed' | 'In Progress' | 'Verified';
   date?: string;
   credentialUrl?: string;
+  credentialId?: string;
+  image?: string;
   topics: string[];
 }
 
 export interface ExperienceItem {
+  id?: string;
   role: string;
   company: string;
-  type: 'Internship' | 'Offer Documentation';
+  tagline?: string;
+  type: string;
   period: string;
+  duration?: string;
+  date?: string;
+  refId?: string;
+  location?: string;
+  documentType?: string;
+  documentStatus?: string;
+  offerLetterImage?: string;
+  offerLetterPdf?: string;
   description: string;
   responsibilities: string[];
   technologies: string[];
+  contact?: string;
+  website?: string;
 }
 
 export const PORTFOLIO_CONFIG = {
@@ -89,39 +104,39 @@ export const PORTFOLIO_CONFIG = {
 
   skills: [
     {
+      title: "Frontend Development",
+      description: "Creating responsive, accessible, and visually engaging user interfaces using modern web technologies.",
+      skills: ["HTML5", "CSS3", "JavaScript", "React"]
+    },
+    {
+      title: "Backend Development",
+      description: "Building application logic, APIs, and server-side functionality that power reliable web applications.",
+      skills: ["Node.js", "Express.js", "REST APIs"]
+    },
+    {
       title: "Programming Languages",
-      description: "Core languages used for problem solving, backend services, and application logic",
-      skills: ["Python", "Java", "JavaScript (ES6+)"]
+      description: "Learning and applying programming fundamentals to solve problems and develop software.",
+      skills: ["Python", "Java", "JavaScript"]
     },
     {
-      title: "Frontend Engineering",
-      description: "Building responsive, semantic, and accessible user interfaces",
-      skills: ["HTML5", "CSS3 / Modern CSS", "React", "TypeScript", "Responsive Web Design", "DOM Manipulation"]
-    },
-    {
-      title: "Backend & APIs",
-      description: "Designing structured RESTful endpoints and server-side logic",
-      skills: ["Python", "FastAPI", "REST APIs", "Node.js Basics", "JSON Architecture"]
+      title: "Database Management",
+      description: "Working with structured data, database design, queries, and data storage.",
+      skills: ["MongoDB", "SQL"]
     },
     {
       title: "AI & Machine Learning",
-      description: "Hands-on integration with state-of-the-art models and pipelines",
-      skills: ["Generative AI", "AI API Integration", "Ollama Local LLMs", "Prompt Engineering", "ML Fundamentals"]
+      description: "Exploring artificial intelligence, machine learning concepts, and intelligent applications.",
+      skills: ["Artificial Intelligence", "Machine Learning", "Generative AI"]
     },
     {
-      title: "Databases & Cloud",
-      description: "Persistent storage, relational schemas, and cloud platforms",
-      skills: ["SQL", "Relational Database Design", "Supabase", "LocalStorage Architecture"]
+      title: "Tools & Technologies",
+      description: "Using development tools, version control, and modern workflows to build and maintain projects.",
+      skills: ["Git", "GitHub", "VS Code", "npm"]
     },
     {
-      title: "Tools & Workflow",
-      description: "Modern developer tooling for version control and productivity",
-      skills: ["Git", "GitHub", "VS Code", "Vite", "Command Line (PowerShell/Bash)"]
-    },
-    {
-      title: "Design & Prototyping",
-      description: "Creating accessible, human-friendly visual hierarchies",
-      skills: ["UI/UX Principles", "Wireframing", "Layout Design", "Design Systems", "Accessibility (WCAG)"]
+      title: "UI/UX Design",
+      description: "Designing intuitive digital experiences with attention to usability, layout, interaction, and visual consistency.",
+      skills: ["Figma", "Wireframing", "Responsive Design", "Prototyping"]
     }
   ] as SkillCategory[],
 
@@ -186,8 +201,8 @@ export const PORTFOLIO_CONFIG = {
     {
       degree: "Bachelor of Computer Applications (BCA)",
       field: "Computer Science & Application Development",
-      institution: "Affiliated University / College (Editable in settings)",
-      period: "Current Student (Expected Graduation: 2026/2027)",
+      institution: "ITM, GIDA, Gorakhpur",
+      period: "Current Student (In Progress)",
       status: "In Progress",
       coursework: [
         "Data Structures & Algorithms",
@@ -202,11 +217,63 @@ export const PORTFOLIO_CONFIG = {
         "Maintained strong focus on practical software construction and real-world project development",
         "Active self-directed research in modern full-stack frameworks and generative AI tooling"
       ]
+    },
+    {
+      degree: "Intermediate (12th)",
+      field: "Senior Secondary",
+      institution: "Raghuraj Singh Kisan Inter College",
+      period: "Completed",
+      status: "Completed",
+      coursework: [],
+      highlights: []
+    },
+    {
+      degree: "High School (10th)",
+      field: "Secondary Education",
+      institution: "Raghuraj Singh Kisan Inter College",
+      period: "Completed",
+      status: "Completed",
+      coursework: [],
+      highlights: []
     }
   ] as EducationItem[],
 
   certifications: [
     {
+      id: "gen-ai-studio",
+      title: "Introduction to Generative AI Studio",
+      issuer: "Simplilearn",
+      type: "Course",
+      status: "Completed",
+      date: "1st September 2026",
+      credentialId: "10679653",
+      image: "/certificates/cert-generative-ai-studio.png",
+      topics: ["Generative AI", "AI Studio", "Prompt Engineering", "Large Language Models"]
+    },
+    {
+      id: "ml-python",
+      title: "Machine Learning Using Python",
+      issuer: "Simplilearn",
+      type: "Course",
+      status: "Completed",
+      date: "23rd August 2026",
+      credentialId: "10636941",
+      image: "/certificates/cert-machine-learning-python.png",
+      topics: ["Machine Learning", "Python", "Predictive Modeling", "Algorithm Training"]
+    },
+    {
+      id: "codealpha-uiux",
+      title: "UI/UX Design Virtual Internship",
+      issuer: "CodeAlpha",
+      type: "Internship Certificate",
+      status: "Verified",
+      date: "10th October 2026",
+      credentialId: "CA/DF1/320277",
+      image: "/certificates/cert-codealpha-internship.png",
+      topics: ["UI/UX Design", "Wireframing", "Figma", "Digital Experiences", "Design Systems"]
+    },
+    {
+      id: "samsung-bigdata",
       title: "Big Data Professional Course",
       issuer: "Samsung",
       type: "Course",
@@ -214,68 +281,86 @@ export const PORTFOLIO_CONFIG = {
       topics: ["Big Data Analytics", "Data Processing", "Distributed Concepts"]
     },
     {
-      title: "Cybersecurity Fundamentals",
+      id: "mastercard-cybersec",
+      title: "Cybersecurity Job Simulation",
       issuer: "Mastercard",
       type: "Course",
       status: "Completed",
-      topics: ["Network Security", "Threat Modeling", "Defensive Practices"]
+      date: "August 21st, 2026",
+      credentialId: "6a87de09841fdedde79827db",
+      image: "/certificates/cert-mastercard-cybersecurity.png",
+      topics: ["Phishing Simulation", "Threat Modeling", "Defensive Practices", "Security Analysis"]
     },
     {
+      id: "tata-genai",
+      title: "GenAI-Powered Data Analytics",
+      issuer: "Tata",
+      type: "Specialization",
+      status: "Completed",
+      date: "October 10th, 2026",
+      image: "/certificates/cert-tata-genai-analytics.png",
+      topics: ["AI Data Synthesis", "Analytics Pipelines", "Exploratory Data Analysis"]
+    },
+    {
+      id: "google-genai",
       title: "Generative AI Fundamentals",
       issuer: "Google Cloud",
       type: "Certification",
       status: "Completed",
       topics: ["Large Language Models", "Prompt Engineering", "Responsible AI Principles"]
-    },
-    {
-      title: "Machine Learning Foundations",
-      issuer: "Simplilearn",
-      type: "Course",
-      status: "Completed",
-      topics: ["Supervised Learning", "Model Evaluation", "Statistical Foundations"]
-    },
-    {
-      title: "GenAI-Powered Data Analytics",
-      issuer: "Tata",
-      type: "Specialization",
-      status: "Completed",
-      topics: ["AI Data Synthesis", "Analytics Pipelines", "Business Intelligence"]
-    },
-    {
-      title: "Web Development Certification",
-      issuer: "Professional Learning Provider",
-      type: "Certification",
-      status: "Completed",
-      topics: ["Responsive Web Design", "Modern JavaScript", "Frontend Standards"]
     }
   ] as CertificationItem[],
 
   experience: [
     {
+      id: "cognifyz-webdev",
       role: "Web Development Intern",
-      company: "Cognifyz Technologies",
-      type: "Internship",
-      period: "Internship / Offer Documentation",
-      description: "Focused on frontend engineering, responsive web interface design, and client-side optimization across diverse viewport dimensions.",
+      company: "Cognifyz IT Solutions Pvt. Ltd.",
+      tagline: "Where Data Meets Intelligence",
+      type: "Official Offer Letter",
+      documentType: "Internship Offer Letter",
+      documentStatus: "Offer Letter (Verified)",
+      period: "Offer Date: 04/10/2026",
+      date: "04/10/2026",
+      duration: "1 Month (Self-Paced Industry Tasks)",
+      refId: "Ref. : CTI/A1/C426682",
+      location: "Warora, Chandrapur, Maharashtra",
+      contact: "support@cognifyz.com",
+      website: "www.cognifyz.com",
+      offerLetterImage: "/internships/offer-cognifyz-webdev.png",
+      offerLetterPdf: "/internships/offer-cognifyz-webdev.pdf",
+      description: "Selected as Web Development Intern at Cognifyz IT Solutions Pvt. Ltd. based on verified qualifications, skills, and enthusiasm for web technologies. Focused on developing and integrating technologies to build scalable solutions that meet customer needs, ensuring application stability, and creating seamless front-end and back-end user experiences.",
       responsibilities: [
-        "Developed interactive, semantic web interfaces following modern CSS and HTML standards",
-        "Ensured cross-browser compatibility and accessible component design",
-        "Collaborated on feature specifications and git-based version control workflows"
+        "Developing and integrating modern technologies to engineer scalable web solutions",
+        "Front-end and back-end development ensuring system stability and high performance",
+        "Crafting seamless, accessible, and responsive digital user experiences",
+        "Collaborating on diverse real-world projects and tasks aligned with customer needs"
       ],
-      technologies: ["HTML5", "CSS3", "JavaScript", "Git", "Responsive Design"]
+      technologies: ["Full-Stack Development", "Front-End", "Back-End Integration", "JavaScript", "HTML5", "CSS3", "System Architecture"]
     },
     {
+      id: "codealpha-uiux",
       role: "UI/UX Design Intern",
       company: "CodeAlpha",
-      type: "Internship",
-      period: "Internship / Offer Documentation",
-      description: "Concentrated on user experience architecture, wireframing user journeys, and creating cohesive design system tokens.",
+      tagline: "Virtual UI/UX Design Internship",
+      type: "Virtual Internship Offer",
+      documentType: "Virtual Internship Offer Letter",
+      documentStatus: "Offer Letter (Verified)",
+      period: "20 Oct 2026 – 20 Nov 2026 (1 Month)",
+      date: "10th October 2026",
+      duration: "1 Month (20 Oct 2026 – 20 Nov 2026)",
+      refId: "Student ID: CA/DF1/320277",
+      location: "Virtual / Remote (Online)",
+      offerLetterImage: "/internships/offer-codealpha-uiux.png",
+      offerLetterPdf: "/internships/offer-codealpha-uiux.pdf",
+      description: "Confirmed selection for CodeAlpha's 1-month Virtual UI/UX Design Internship. Focused on practical assignments and projects related to UI/UX design, wireframing, improving technical design skills, and gaining hands-on digital product design experience with performance-based stipend eligibility.",
       responsibilities: [
-        "Designed high-contrast, distraction-free interface layouts with clear typographical scales",
-        "Conducted usability reviews and accessibility assessments across user navigation flows",
-        "Translated functional product requirements into structured design prototypes"
+        "Participated actively in practical assignments and real-world UI/UX design projects",
+        "Architected wireframes, user journeys, and interactive high-fidelity prototypes",
+        "Applied usability guidelines, accessibility standards, and design system tokens",
+        "Delivered assigned milestones on time with responsible, professional communication"
       ],
-      technologies: ["UI/UX Design", "Wireframing", "Prototyping", "Design Systems", "Usability"]
+      technologies: ["UI/UX Design", "Wireframing", "Figma", "User Research", "Prototyping", "Design Systems", "Usability Testing"]
     }
   ] as ExperienceItem[]
 };

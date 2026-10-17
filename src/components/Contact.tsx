@@ -39,7 +39,7 @@ export const Contact: React.FC = () => {
       <div className="container">
         {/* Section Header */}
         <div style={{ marginBottom: '40px' }}>
-          <span className="section-tag">10 &bull; Get In Touch</span>
+          <span className="section-tag">09 &bull; Get In Touch</span>
           <h2 className="section-title">Contact & Connect</h2>
           <p className="section-subtitle">
             Open to internship opportunities, technical collaborations, and software engineering inquiries.
@@ -317,6 +317,11 @@ export const Contact: React.FC = () => {
         @media (max-width: 840px) {
           .contact-grid {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .contact-grid > div.card {
+            padding: 20px 16px !important;
           }
         }
       `}</style>

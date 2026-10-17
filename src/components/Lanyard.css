@@ -1,0 +1,156 @@
+/* =========================================================
+   3D DEVELOPER LANYARD ID BADGE STYLES
+   With Halftone Reveal effect on Back ID Card
+   Theme: Obsidian & Orange (#0B0B0B, #FF6A00, #FF8C42)
+   Mobile & Android Optimized: touch-action: pan-y
+   ========================================================= */
+
+.lanyard-container {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  height: 540px;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lanyard-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  cursor: grab;
+  outline: none;
+  touch-action: pan-y;
+}
+
+.lanyard-canvas:active {
+  cursor: grabbing;
+}
+
+/* Floating Controls & Flip Button */
+.lanyard-controls {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  width: max-content;
+  max-width: calc(100% - 24px);
+}
+
+.lanyard-flip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.92);
+  border: 1px solid #333333;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: var(--font-mono, monospace);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #F5F5F5;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+  white-space: nowrap;
+}
+
+.lanyard-flip-btn:hover {
+  background: #1C1510;
+  border-color: #FF6A00;
+  color: #FF8C42;
+  box-shadow: 0 4px 20px rgba(255, 106, 0, 0.28);
+  transform: translateY(-1px);
+}
+
+.lanyard-flip-btn:active {
+  transform: translateY(0);
+}
+
+.lanyard-flip-btn:focus-visible {
+  outline: 2px solid #FF6A00;
+  outline-offset: 2px;
+}
+
+.lanyard-flip-icon {
+  transition: transform 0.4s ease;
+  flex-shrink: 0;
+}
+
+.lanyard-flip-icon.is-flipped {
+  transform: rotate(180deg);
+}
+
+/* Active Halftone Reveal Status Badge */
+.lanyard-halftone-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 106, 0, 0.12);
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  font-family: var(--font-mono, monospace);
+  font-size: 10.5px;
+  color: #FF8C42;
+  font-weight: 600;
+  animation: badgeFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 10px rgba(255, 106, 0, 0.15);
+  white-space: nowrap;
+}
+
+@keyframes badgeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Scaling for Android & Mobile Phones */
+@media (max-width: 960px) {
+  .lanyard-container {
+    height: 480px;
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 600px) {
+  .lanyard-container {
+    height: 410px;
+    max-width: 330px;
+  }
+
+  .lanyard-flip-btn {
+    font-size: 11px;
+    padding: 7px 14px;
+    gap: 6px;
+  }
+
+  .lanyard-halftone-badge {
+    font-size: 9.5px;
+    padding: 3px 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .lanyard-container {
+    height: 360px;
+    max-width: 290px;
+  }
+}

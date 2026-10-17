@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FileDown, Eye, Check, FileText, Download } from 'lucide-react';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 import { generateClientResumePdf } from '../utils/generateResumePdf';
+import './ResumeSection.css';
 
 export const ResumeSection: React.FC = () => {
   const { personal, education, skills, projects } = PORTFOLIO_CONFIG;
+  const [isCrumpled, setIsCrumpled] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   const handleDownloadDynamic = () => {
     generateClientResumePdf();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const relX = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+    const relY = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
+    setTilt({
+      x: relY * 7,
+      y: -relX * 9
+    });
+  };
+
+  const handleMouseEnter = () => {
+    setIsCrumpled(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsCrumpled(false);
+    setTilt({ x: 0, y: 0 });
   };
 
   return (
@@ -32,18 +54,59 @@ export const ResumeSection: React.FC = () => {
           }}
           className="resume-grid"
         >
-          {/* Left Column: Visual ATS Resume Document Stage */}
-          <div
-            style={{
-              backgroundColor: '#FFFFFF',
-              color: '#18181B',
-              borderRadius: '12px',
-              padding: '40px',
-              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.4)',
-              fontFamily: 'Helvetica, Arial, sans-serif'
-            }}
-            className="resume-sheet"
-          >
+          {/* Left Column: Visual ATS Resume Document Stage with Paper Crumple Effect */}
+          <div className="resume-stage-wrapper">
+            {/* Interactive Paper Crumple Status Pill */}
+            <div className={`paper-crumple-indicator ${isCrumpled ? 'is-active' : ''}`}>
+              <span className="paper-crumple-dot" />
+              <span>
+                {isCrumpled
+                  ? '🤏 Paper Crumpled! Move pointer away to flatten'
+                  : '📄 Hover over sheet to crumple paper'}
+              </span>
+            </div>
+
+            {/* Hidden SVG Filter Definition for authentic paper displacement wrinkles */}
+            <svg
+              width="0"
+              height="0"
+              style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}
+              aria-hidden="true"
+            >
+              <defs>
+                <filter id="resume-paper-crumple" x="-10%" y="-10%" width="120%" height="120%">
+                  <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.035"
+                    numOctaves="4"
+                    result="noise"
+                    seed="17"
+                  />
+                  <feDisplacementMap
+                    in="SourceGraphic"
+                    in2="noise"
+                    scale="9"
+                    xChannelSelector="R"
+                    yChannelSelector="G"
+                  />
+                </filter>
+              </defs>
+            </svg>
+
+            <div
+              className={`resume-sheet ${isCrumpled ? 'is-crumpled' : ''}`}
+              onMouseEnter={handleMouseEnter}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              style={{
+                '--sheet-dynamic-transform': isCrumpled
+                  ? `perspective(1200px) scale(0.955) rotateX(${5.5 + tilt.x}deg) rotateY(${-4.8 + tilt.y}deg) rotateZ(${0.8 + tilt.y * 0.15}deg) skewX(-1.4deg)`
+                  : 'perspective(1200px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg)'
+              } as React.CSSProperties}
+            >
+              {/* Paper Creases & Fold Highlights Overlays */}
+              <div className="paper-crease-overlay" aria-hidden="true" />
+              <div className="paper-crease-highlights" aria-hidden="true" />
             {/* Header */}
             <div style={{ borderBottom: '1.5px solid #E87524', paddingBottom: '16px', marginBottom: '20px' }}>
               <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#18181B', letterSpacing: '-0.02em', marginBottom: '4px' }}>
@@ -120,16 +183,17 @@ export const ResumeSection: React.FC = () => {
               </p>
             </div>
 
-            {/* Internships & Certs Summary */}
+            {/* Certifications Summary */}
             <div>
               <h4 style={{ fontSize: '11px', fontWeight: 700, color: '#E87524', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '4px', borderBottom: '1px solid #E4E4E7', paddingBottom: '2px' }}>
-                Certifications & Internships
+                Certifications &amp; Credentials
               </h4>
               <p style={{ fontSize: '9.5px', color: '#3F3F46', lineHeight: 1.5 }}>
                 &bull; Samsung (Big Data) &bull; Mastercard (Cybersecurity) &bull; Google Cloud (GenAI) &bull; Cognifyz Technologies (Web Dev) &bull; CodeAlpha (UI/UX)
               </p>
             </div>
           </div>
+        </div>
 
           {/* Right Column: Download Actions & Verification details */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

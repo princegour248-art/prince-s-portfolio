@@ -1,0 +1,39 @@
+/* =========================================================
+   REACT BITS PARTICLE TEXT COMPONENT
+   Interactive canvas particles with cursor repulsion & burst
+   ========================================================= */
+
+.particle-text-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}
+
+.particle-text-canvas {
+  display: block;
+  touch-action: none;
+  filter: drop-shadow(0 0 10px rgba(255, 106, 0, 0.2));
+  transition: filter 0.3s ease;
+}
+
+.particle-text-wrapper:hover .particle-text-canvas {
+  filter: drop-shadow(0 0 18px rgba(255, 106, 0, 0.45));
+}
+
+.particle-text-hint {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  color: #71717A;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.particle-text-wrapper:hover .particle-text-hint {
+  opacity: 1;
+  color: #FF8C42;
+}

@@ -1,7 +1,9 @@
 import React from 'react';
-import { ArrowRight, FileDown, Mail, Code, Terminal } from 'lucide-react';
+import { ArrowRight, FileDown, Mail } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
+import { Lanyard } from './Lanyard';
+import { TechText } from './TechText';
 
 export const Hero: React.FC = () => {
   const { personal } = PORTFOLIO_CONFIG;
@@ -10,8 +12,8 @@ export const Hero: React.FC = () => {
     <section
       id="hero"
       style={{
-        paddingTop: '150px',
-        paddingBottom: '90px',
+        paddingTop: 'clamp(95px, 12vw, 150px)',
+        paddingBottom: 'clamp(50px, 8vw, 90px)',
         minHeight: '88vh',
         display: 'flex',
         alignItems: 'center',
@@ -20,7 +22,7 @@ export const Hero: React.FC = () => {
       }}
     >
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 320px', gap: '48px', alignItems: 'center' }} className="hero-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.05fr) minmax(360px, 440px)', gap: '48px', alignItems: 'center' }} className="hero-grid">
           {/* Left Column: Headlines & Bio */}
           <div>
             {/* Status Pill */}
@@ -31,19 +33,49 @@ export const Hero: React.FC = () => {
               </span>
             </div>
 
-            {/* Name */}
-            <h1
+            {/* Name with TechText interactive React Bits component */}
+            <div
               style={{
-                fontSize: 'clamp(38px, 5.5vw, 64px)',
-                fontWeight: 800,
-                letterSpacing: '-0.035em',
-                lineHeight: 1.1,
-                color: '#F5F2ED',
+                width: '100%',
+                maxWidth: '680px',
+                height: 'clamp(62px, 8.5vw, 92px)',
+                position: 'relative',
                 marginBottom: '16px'
               }}
             >
-              {personal.name}
-            </h1>
+              <h1
+                style={{
+                  position: 'absolute',
+                  width: '1px',
+                  height: '1px',
+                  padding: 0,
+                  margin: '-1px',
+                  overflow: 'hidden',
+                  clip: 'rect(0, 0, 0, 0)',
+                  whiteSpace: 'nowrap',
+                  border: 0
+                }}
+              >
+                {personal.name}
+              </h1>
+              <TechText
+                text={personal.name}
+                fontWeight={800}
+                fontSize={84}
+                letterSpacing={-0.035}
+                color="#F5F2ED"
+                accentColor="#E87524"
+                align="left"
+                reveal="letter"
+                dashLength={4}
+                dashGap={2}
+                specks={15}
+                intro="type"
+                introDuration={1.8}
+                clickKick
+                guides={false}
+              />
+            </div>
 
             {/* Professional Headline */}
             <h2
@@ -72,7 +104,7 @@ export const Hero: React.FC = () => {
             </p>
 
             {/* Action Buttons: 5 Required Buttons */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '32px' }}>
+            <div className="hero-actions" style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
               {/* 1. Explore My Projects */}
               <a href="#projects" className="btn btn-primary btn-lg">
                 <span>Explore My Projects</span>
@@ -119,106 +151,29 @@ export const Hero: React.FC = () => {
                 <span>Contact Me</span>
               </a>
             </div>
-
-            {/* Quick Metrics Bar */}
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '24px',
-                paddingTop: '24px',
-                borderTop: '1px solid #242424'
-              }}
-            >
-              <div>
-                <span style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#737373', letterSpacing: '0.06em' }}>Primary Stack</span>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: '#F5F2ED' }}>Python &bull; FastAPI &bull; JS</span>
-              </div>
-              <div style={{ width: '1px', backgroundColor: '#303030' }} />
-              <div>
-                <span style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#737373', letterSpacing: '0.06em' }}>Flagship Project</span>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: '#F5F2ED' }}>Master Sahab (AI Study)</span>
-              </div>
-              <div style={{ width: '1px', backgroundColor: '#303030' }} />
-              <div>
-                <span style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', color: '#737373', letterSpacing: '0.06em' }}>Certifications</span>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: '#F5F2ED' }}>Google Cloud, Samsung, Tata</span>
-              </div>
-            </div>
           </div>
 
-          {/* Right Column: Tasteful Profile Monogram Placeholder */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div
-              style={{
-                width: '280px',
-                height: '320px',
-                backgroundColor: '#1A1A1A',
-                border: '1px solid #303030',
-                borderRadius: '16px',
-                padding: '24px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                position: 'relative'
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#A6A6A6' }}>
-                  DEV PROFILE
-                </span>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#E87524' }} />
-              </div>
-
-              {/* Geometric Monogram Portrait */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '16px', margin: 'auto 0' }}>
-                <div
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    borderRadius: '50%',
-                    backgroundColor: '#111111',
-                    border: '2px solid #E87524',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '36px',
-                    fontWeight: 800,
-                    color: '#E87524',
-                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
-                  }}
-                >
-                  PG
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <span style={{ display: 'block', fontWeight: 700, fontSize: '16px', color: '#F5F2ED' }}>
-                    Prince Gour
-                  </span>
-                  <span style={{ fontSize: '12px', color: '#A6A6A6' }}>
-                    Developer & AI Enthusiast
-                  </span>
-                </div>
-              </div>
-
-              {/* Status tags */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #282828', paddingTop: '14px' }}>
-                <span style={{ fontSize: '11.5px', color: '#737373', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <Terminal size={12} color="#E87524" /> Local & Cloud
-                </span>
-                <span style={{ fontSize: '11.5px', color: '#737373', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <Code size={12} color="#E87524" /> Python/JS
-                </span>
-              </div>
-            </div>
+          {/* Right Column: Interactive 3D Developer Lanyard Badge */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Lanyard />
           </div>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
-            gap: 40px !important;
+            gap: 32px !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .hero-actions {
+            gap: 10px !important;
+          }
+          .hero-actions .btn-lg {
+            width: 100%;
+            justify-content: center;
           }
         }
       `}</style>

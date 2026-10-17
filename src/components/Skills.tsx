@@ -1,118 +1,103 @@
-import React from 'react';
-import { Code2, Layout, Server, BrainCircuit, Database, Wrench, Palette } from 'lucide-react';
-import { PORTFOLIO_CONFIG } from '../data/portfolioData';
+import React, { useState } from 'react';
+import { SKILL_CATEGORIES, type SkillCategoryItem } from '../data/skillsSectionData';
+import { SkillWheel } from './SkillWheel';
+import { SkillFlipCard } from './SkillFlipCard';
+import { SkillFolder } from './SkillFolder';
+import { ParticleText } from './ParticleText';
+import './Skills.css';
 
 export const Skills: React.FC = () => {
-  const { skills } = PORTFOLIO_CONFIG;
-
-  const categoryIcons: Record<string, React.ElementType> = {
-    "Programming Languages": Code2,
-    "Frontend Engineering": Layout,
-    "Backend & APIs": Server,
-    "AI & Machine Learning": BrainCircuit,
-    "Databases & Cloud": Database,
-    "Tools & Workflow": Wrench,
-    "Design & Prototyping": Palette
-  };
+  // Single source of truth for selected category across Wheel, Flip Card, and Folder
+  const [selectedCategory, setSelectedCategory] = useState<SkillCategoryItem>(
+    SKILL_CATEGORIES[0]
+  );
 
   return (
-    <section id="skills" className="section" style={{ borderBottom: '1px solid #222222' }}>
+    <section
+      id="skills"
+      className="section"
+      style={{
+        backgroundColor: '#0B0B0B',
+        borderBottom: '1px solid #222222',
+        position: 'relative',
+        overflow: 'hidden'
+      }}
+    >
       <div className="container">
         {/* Section Header */}
-        <div style={{ marginBottom: '48px' }}>
-          <span className="section-tag">02 &bull; Capabilities</span>
-          <h2 className="section-title">Technical Skills</h2>
+        <div style={{ marginBottom: '36px', textAlign: 'left' }}>
+          <div style={{ marginBottom: '12px' }}>
+            <span className="section-tag">02 &bull; Capabilities</span>
+          </div>
+          <div style={{ margin: '8px 0 12px 0' }}>
+            <ParticleText text="SKILLS" fontSize={48} />
+          </div>
           <p className="section-subtitle">
-            Core technologies, programming languages, and engineering tools I utilize to construct software systems. Structured transparently without arbitrary percentage bars.
+            Choose a category. Discover what I build.
           </p>
         </div>
 
-        {/* Skills Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
-            gap: '24px'
-          }}
-          className="skills-grid"
-        >
-          {skills.map((cat, idx) => {
-            const Icon = categoryIcons[cat.title] || Code2;
-            return (
-              <div
-                key={idx}
-                className="card"
+        {/* Interactive Three-Part Layout */}
+        <div className="skills-interactive-container">
+          {/* LEFT: React Bits Option Wheel */}
+          <div className="skills-column skills-column-left">
+            <div style={{ marginBottom: '14px', textAlign: 'center' }}>
+              <span
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  backgroundColor: '#161616',
-                  padding: '24px'
+                  fontFamily: 'var(--font-mono, monospace)',
+                  fontSize: '11px',
+                  color: '#8E8E93',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em'
                 }}
               >
-                <div>
-                  {/* Category Header */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-                    <div
-                      style={{
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '8px',
-                        backgroundColor: '#1F1F1F',
-                        border: '1px solid #303030',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '#E87524'
-                      }}
-                    >
-                      <Icon size={18} />
-                    </div>
-                    <div>
-                      <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#F5F2ED' }}>
-                        {cat.title}
-                      </h3>
-                    </div>
-                  </div>
+                Option Wheel
+              </span>
+            </div>
+            <SkillWheel
+              categories={SKILL_CATEGORIES}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
+            />
+          </div>
 
-                  <p style={{ fontSize: '13px', color: '#A6A6A6', marginBottom: '18px', lineHeight: 1.5 }}>
-                    {cat.description}
-                  </p>
+          {/* CENTER: 3D Flip Card */}
+          <div className="skills-column skills-column-center">
+            <div style={{ marginBottom: '14px', textAlign: 'center' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-mono, monospace)',
+                  fontSize: '11px',
+                  color: '#8E8E93',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em'
+                }}
+              >
+                Interactive 3D Overview
+              </span>
+            </div>
+            <SkillFlipCard key={selectedCategory.id} category={selectedCategory} />
+          </div>
 
-                  {/* Skills Pills */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                    {cat.skills.map((skill, sIdx) => (
-                      <span
-                        key={sIdx}
-                        style={{
-                          fontSize: '12.5px',
-                          fontWeight: 500,
-                          padding: '4px 10px',
-                          borderRadius: '6px',
-                          backgroundColor: '#1E1E1E',
-                          border: '1px solid #303030',
-                          color: '#F5F2ED',
-                          transition: 'border-color 150ms ease'
-                        }}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {/* RIGHT: React Bits Folder Float */}
+          <div className="skills-column skills-column-right">
+            <div style={{ marginBottom: '14px', textAlign: 'center' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-mono, monospace)',
+                  fontSize: '11px',
+                  color: '#8E8E93',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em'
+                }}
+              >
+                Folder Float
+              </span>
+            </div>
+            <SkillFolder category={selectedCategory} />
+          </div>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 640px) {
-          .skills-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };

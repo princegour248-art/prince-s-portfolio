@@ -1,0 +1,40 @@
+/* =========================================================
+   REACT BITS ASCII TEXT COMPONENT
+   Interactive 3D waving ASCII matrix text with cursor ripple
+   ========================================================= */
+
+.ascii-text-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  line-height: 1;
+}
+
+.ascii-text-canvas {
+  display: block;
+  touch-action: none;
+  filter: drop-shadow(0 0 12px rgba(255, 106, 0, 0.25));
+  transition: filter 0.3s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ascii-text-wrapper:hover .ascii-text-canvas {
+  filter: drop-shadow(0 0 20px rgba(255, 106, 0, 0.5));
+}
+
+.ascii-text-hint {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  color: #71717A;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 5px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.ascii-text-wrapper:hover .ascii-text-hint {
+  opacity: 1;
+  color: #FF8C42;
+}

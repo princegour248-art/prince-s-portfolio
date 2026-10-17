@@ -1,0 +1,63 @@
+/* =========================================================
+   REACT BITS SCRAMBLED TEXT COMPONENT
+   Interactive Cyber / Hacker Scramble & Decrypt Animation
+   ========================================================= */
+
+.scrambled-text-container {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: clamp(32px, 4.2vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scrambled-text-container:hover {
+  transform: translateY(-1px);
+}
+
+.scrambled-char {
+  display: inline-block;
+  min-width: 0.62em;
+  text-align: center;
+  transition: color 0.15s ease, text-shadow 0.15s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, color;
+}
+
+/* Character when actively scrambling */
+.scrambled-char.scrambling {
+  color: #FF6A00;
+  text-shadow: 0 0 10px rgba(255, 106, 0, 0.75), 0 0 20px rgba(255, 106, 0, 0.35);
+  transform: scale(1.06);
+}
+
+/* Character when settled / resolved */
+.scrambled-char.resolved {
+  color: #F5F5F5;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  transform: scale(1);
+}
+
+/* Subtle orange underline indicator */
+.scrambled-text-bar {
+  display: block;
+  height: 2px;
+  width: 100%;
+  max-width: 80px;
+  background: linear-gradient(90deg, #FF6A00 0%, rgba(255, 106, 0, 0) 100%);
+  margin-top: 6px;
+  border-radius: 2px;
+  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.scrambled-text-container:hover + .scrambled-text-bar,
+.scrambled-wrapper:hover .scrambled-text-bar {
+  max-width: 140px;
+  box-shadow: 0 0 10px rgba(255, 106, 0, 0.5);
+}

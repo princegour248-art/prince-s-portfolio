@@ -6,9 +6,8 @@ import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Education } from './components/Education';
 import { Certifications } from './components/Certifications';
-import { Experience } from './components/Experience';
 import { ResumeSection } from './components/ResumeSection';
-import { GithubSection } from './components/GithubSection';
+import { SocialSection } from './components/SocialSection';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
@@ -23,13 +22,13 @@ export const App: React.FC = () => {
       'projects',
       'education',
       'certifications',
-      'experience',
       'resume',
-      'github',
+      'social',
       'contact'
     ];
 
-    const observer = new IntersectionObserver(
+    // Section indicator observer
+    const navObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -45,15 +44,33 @@ export const App: React.FC = () => {
 
     sections.forEach((id) => {
       const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      if (el) navObserver.observe(el);
     });
 
-    return () => observer.disconnect();
+    // React Bits Universal Edge Border Glow
+    const handlePointerMove = (e: PointerEvent) => {
+      const target = (e.target as HTMLElement | null)?.closest?.(
+        '.card, .project-card-grid, .skill-flip-face, .reactbits-folder-body, .resume-card, .social-platform-card, .terminal-window, .flex-carousel-card'
+      );
+      if (target && target instanceof HTMLElement) {
+        const rect = target.getBoundingClientRect();
+        target.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        target.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      }
+    };
+
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+
+    return () => {
+      navObserver.disconnect();
+      window.removeEventListener('pointermove', handlePointerMove);
+    };
   }, []);
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#111111', color: '#F5F2ED' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#0B0B0B', color: '#F5F5F5', position: 'relative' }}>
       <Navbar activeSection={activeSection} />
+
       <main>
         <Hero />
         <About />
@@ -61,11 +78,11 @@ export const App: React.FC = () => {
         <Projects />
         <Education />
         <Certifications />
-        <Experience />
         <ResumeSection />
-        <GithubSection />
+        <SocialSection />
         <Contact />
       </main>
+
       <Footer />
     </div>
   );

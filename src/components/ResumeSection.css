@@ -1,0 +1,187 @@
+/* =========================================================
+   RESUME SECTION & REALISTIC PAPER CRUMPLE EFFECT
+   Interactive 3D paper crumpling on hover & smooth unfolding
+   ========================================================= */
+
+.resume-stage-wrapper {
+  perspective: 1200px;
+  position: relative;
+  width: 100%;
+}
+
+/* Status indicator badge above the resume sheet */
+.paper-crumple-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: #A1A1AA;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.paper-crumple-indicator.is-active {
+  color: #FF8C42;
+  background-color: rgba(255, 106, 0, 0.08);
+  border-color: rgba(255, 106, 0, 0.3);
+  box-shadow: 0 0 12px rgba(255, 106, 0, 0.15);
+}
+
+.paper-crumple-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #71717A;
+  transition: all 0.3s ease;
+}
+
+.paper-crumple-indicator.is-active .paper-crumple-dot {
+  background-color: #FF6A00;
+  box-shadow: 0 0 8px #FF6A00;
+  animation: crumplePulse 1.2s infinite alternate;
+}
+
+@keyframes crumplePulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+/* The Paper Sheet */
+.resume-sheet {
+  position: relative;
+  background-color: #FFFFFF;
+  color: #18181B;
+  border-radius: 12px;
+  padding: 40px;
+  font-family: Helvetica, Arial, sans-serif;
+  cursor: grab;
+  isolation: isolate;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform, clip-path, box-shadow, filter;
+  
+  /* Initial flat pristine state */
+  transform: perspective(1200px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.2);
+  filter: none;
+  
+  /* Equal vertex polygon (24 points) for smooth geometric morph */
+  clip-path: polygon(
+    0% 0%, 15% 0%, 32% 0%, 48% 0%, 65% 0%, 82% 0%, 100% 0%,
+    100% 18%, 100% 35%, 100% 52%, 100% 70%, 100% 88%, 100% 100%,
+    84% 100%, 68% 100%, 51% 100%, 33% 100%, 16% 100%, 0% 100%,
+    0% 85%, 0% 67%, 0% 49%, 0% 32%, 0% 15%
+  );
+  
+  /* Butter smooth unfolding transition when pointer is removed */
+  transition: transform 0.65s cubic-bezier(0.19, 1, 0.22, 1),
+              box-shadow 0.65s cubic-bezier(0.19, 1, 0.22, 1),
+              clip-path 0.65s cubic-bezier(0.19, 1, 0.22, 1),
+              filter 0.45s ease;
+}
+
+/* CRUMPLED PAPER HOVER STATE */
+.resume-sheet:hover,
+.resume-sheet.is-crumpled {
+  cursor: grabbing;
+  /* 3D multi-axial crumple compression and twisting */
+  transform: var(--sheet-dynamic-transform, perspective(1200px) scale(0.955) rotateX(5.5deg) rotateY(-4.8deg) rotateZ(0.8deg) skewX(-1.4deg));
+  
+  /* Deep crumpled shadow lifting the crinkled edges off the canvas */
+  box-shadow:
+    -22px 30px 55px rgba(0, 0, 0, 0.62),
+    16px 18px 40px rgba(0, 0, 0, 0.38),
+    inset 0 0 55px rgba(0, 0, 0, 0.18),
+    inset 22px -16px 35px rgba(0, 0, 0, 0.1);
+    
+  /* SVG displacement noise filter: warps text and lines along paper wrinkles */
+  filter: url(#resume-paper-crumple) brightness(0.97) contrast(1.05);
+  
+  /* Crinkled jagged paper edges */
+  clip-path: polygon(
+    0.5% 0.8%, 15.2% 0.3%, 31.7% 1.4%, 48.3% 0.4%, 64.8% 1.2%, 82.1% 0.2%, 99.2% 1.1%,
+    99.8% 18.2%, 98.6% 35%, 99.7% 51.8%, 98.8% 70.2%, 99.9% 88%, 99.1% 98.9%,
+    84.2% 99.4%, 67.8% 98.6%, 51.2% 99.5%, 32.7% 98.7%, 16.1% 99.6%, 1% 99.1%,
+    0.2% 84.8%, 1.4% 67.2%, 0.3% 49%, 1.2% 32.1%, 0.4% 15.2%
+  );
+}
+
+/* PAPER CREASE OVERLAY: Realistic origami-style ridge shadows and valleys */
+.paper-crease-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: multiply;
+  z-index: 5;
+  transition: opacity 0.55s cubic-bezier(0.19, 1, 0.22, 1);
+  background-image:
+    /* Diagonal major crease 1 */
+    linear-gradient(124deg, transparent 23.5%, rgba(0, 0, 0, 0.16) 25.5%, rgba(255, 255, 255, 0.5) 26.5%, transparent 29%),
+    /* Diagonal major crease 2 */
+    linear-gradient(216deg, transparent 41.5%, rgba(0, 0, 0, 0.19) 43.5%, rgba(255, 255, 255, 0.5) 44.5%, transparent 47%),
+    /* Horizontal slant crease */
+    linear-gradient(36deg, transparent 57.5%, rgba(0, 0, 0, 0.14) 59.5%, rgba(255, 255, 255, 0.4) 60.5%, transparent 63%),
+    /* Micro crinkles */
+    linear-gradient(298deg, transparent 69.5%, rgba(0, 0, 0, 0.18) 71.5%, rgba(255, 255, 255, 0.45) 72.5%, transparent 75%),
+    linear-gradient(82deg, transparent 81%, rgba(0, 0, 0, 0.12) 82.5%, rgba(255, 255, 255, 0.3) 83.5%, transparent 85%),
+    /* Facet ambient shading */
+    radial-gradient(ellipse at 30% 32%, rgba(0, 0, 0, 0.11) 0%, transparent 60%),
+    radial-gradient(ellipse at 75% 65%, rgba(0, 0, 0, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse at 42% 84%, rgba(0, 0, 0, 0.1) 0%, transparent 50%);
+}
+
+/* PAPER CREASE HIGHLIGHTS: Bright light reflection on folded peaks */
+.paper-crease-highlights {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  z-index: 6;
+  transition: opacity 0.55s cubic-bezier(0.19, 1, 0.22, 1);
+  background-image:
+    linear-gradient(124deg, transparent 25.2%, rgba(255, 255, 255, 0.75) 26.2%, transparent 27.5%),
+    linear-gradient(216deg, transparent 43.2%, rgba(255, 255, 255, 0.8) 44.2%, transparent 45.5%),
+    linear-gradient(36deg, transparent 59.2%, rgba(255, 255, 255, 0.65) 60.2%, transparent 61.5%),
+    linear-gradient(298deg, transparent 71.2%, rgba(255, 255, 255, 0.75) 72.2%, transparent 73.5%);
+}
+
+.resume-sheet:hover .paper-crease-overlay,
+.resume-sheet.is-crumpled .paper-crease-overlay,
+.resume-sheet:hover .paper-crease-highlights,
+.resume-sheet.is-crumpled .paper-crease-highlights {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .resume-sheet {
+    padding: 20px 16px !important;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .paper-crumple-indicator {
+    font-size: 10px;
+    padding: 5px 12px;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-sheet {
+    transition: none !important;
+    transform: none !important;
+    clip-path: none !important;
+    filter: none !important;
+  }
+}

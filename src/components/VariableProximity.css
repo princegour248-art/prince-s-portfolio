@@ -1,0 +1,22 @@
+/* =========================================================
+   REACT BITS VARIABLE PROXIMITY TEXT COMPONENT
+   Dynamic cursor-distance responsive variable typography
+   ========================================================= */
+
+.variable-proximity-root {
+  display: inline;
+  position: relative;
+  font-family: var(--font-sans);
+}
+
+.variable-proximity-word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: 0.28em;
+}
+
+.variable-proximity-char {
+  display: inline-block;
+  will-change: font-weight, font-variation-settings, color;
+  transition: font-weight 0.08s ease-out, font-variation-settings 0.08s ease-out, color 0.12s ease;
+}

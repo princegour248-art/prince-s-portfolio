@@ -1,0 +1,794 @@
+/* =========================================================
+   SKILLS SECTION STYLES
+   1. OptionWheel: Clean 3D Typography Drum (matching React Bits screenshot)
+   2. 3D Flip Card: Perspective RotateY
+   3. FolderFloat: 3D Drop-Flap & Click-to-Popup Floating Pills Cloud (No Dialog Box)
+   Theme: Obsidian & Orange (#0B0B0B, #FF6A00, #FF8C42)
+   ========================================================= */
+
+/* Three Column Layout */
+.skills-interactive-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  margin-top: 48px;
+  width: 100%;
+}
+
+.skills-column {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.skills-column-left {
+  max-width: 360px;
+  width: 100%;
+}
+
+.skills-column-center {
+  max-width: 350px;
+  width: 100%;
+}
+
+.skills-column-right {
+  max-width: 370px;
+  width: 100%;
+}
+
+/* =========================================================
+   1. REACT BITS: OPTION WHEEL (MATCHING SCREENSHOT UI)
+   ========================================================= */
+.reactbits-option-wheel {
+  position: relative;
+  width: 100%;
+  max-width: 330px;
+  height: 380px;
+  perspective: 1000px;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-x;
+  outline: none;
+  cursor: grab;
+  /* NO BOX: Transparent background, no border, no card shadow */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.reactbits-option-wheel:hover {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.reactbits-option-wheel:active {
+  cursor: grabbing;
+}
+
+/* 3D Drum Container */
+.reactbits-wheel-drum {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 54px;
+  margin-top: -27px;
+  transform-style: preserve-3d;
+}
+
+/* Wheel Option Items: Pure Typography matching React Bits */
+.reactbits-wheel-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: color 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
+  padding: 0 16px;
+}
+
+/* Hyphen before each item */
+.reactbits-wheel-hyphen {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #52525B;
+  transition: color 0.25s ease, font-size 0.25s ease, text-shadow 0.25s ease;
+}
+
+.reactbits-wheel-item.active .reactbits-wheel-hyphen {
+  color: #FF6A00;
+  font-size: 24px;
+  text-shadow: 0 0 12px rgba(255, 106, 0, 0.7);
+}
+
+.reactbits-wheel-text {
+  font-size: 20px;
+  font-weight: 500;
+  color: #71717A;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  transition: color 0.25s ease, font-size 0.25s ease, font-weight 0.25s ease;
+}
+
+/* Active Center Item: Sharp, Bold, Bright matching screenshot */
+.reactbits-wheel-item.active .reactbits-wheel-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.025em;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+}
+
+.reactbits-wheel-item:hover .reactbits-wheel-text,
+.reactbits-wheel-item:hover .reactbits-wheel-hyphen {
+  color: #FF8C42;
+}
+
+.reactbits-wheel-item.active:hover .reactbits-wheel-text {
+  color: #FFFFFF;
+}
+
+/* Top & Bottom Vignette Gradient Masks matching screenshot */
+.reactbits-wheel-mask-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 110px;
+  background: linear-gradient(to bottom, #0B0B0B 0%, rgba(11, 11, 11, 0.85) 45%, transparent 100%);
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* Up/Down Navigation Buttons */
+.reactbits-wheel-nav-btn {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #181818;
+  border: 1px solid #2B2B2B;
+  color: #A1A1AA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 12;
+  transition: all 0.2s ease;
+}
+
+.reactbits-wheel-nav-btn.up {
+  top: 10px;
+}
+
+.reactbits-wheel-nav-btn.down {
+  bottom: 10px;
+}
+
+.reactbits-wheel-nav-btn:hover {
+  background: #241A13;
+  border-color: #FF6A00 !important;
+  color: #FF6A00;
+  box-shadow: 0 0 12px rgba(255, 106, 0, 0.45) !important;
+  transform: translateX(-50%) scale(1.08);
+}
+
+/* Explicitly prevent inner elements of the 3D flip card from getting hover border glow */
+.skill-flip-face *,
+.skill-card-icon-halo,
+.skill-card-badge,
+.skill-card-title,
+.skill-card-subtitle,
+.skill-card-center-content {
+  box-shadow: none !important;
+}
+
+.skill-card-icon-halo {
+  border: 1px solid rgba(255, 106, 0, 0.35) !important;
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.15) !important;
+}
+
+.skill-card-badge {
+  border: 1px solid rgba(255, 106, 0, 0.3) !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   2. 3D FLIP CARD
+   ========================================================= */
+.skill-flip-container {
+  width: 100%;
+  height: 380px;
+  perspective: 1000px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.skill-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.skill-flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.skill-flip-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px 24px;
+  box-sizing: border-box;
+}
+
+.skill-flip-front {
+  background: linear-gradient(170deg, #181818 0%, #121212 100%);
+  border: 1px solid #2B2B2B;
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.7), 0 0 25px -8px rgba(255, 106, 0, 0.15);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-flip-container:hover .skill-flip-front {
+  border-color: rgba(255, 106, 0, 0.5) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 30px -5px rgba(255, 106, 0, 0.35) !important;
+}
+
+.skill-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-family: var(--font-mono, monospace);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #FF6A00;
+  background: rgba(255, 106, 0, 0.09);
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  align-self: flex-start;
+}
+
+.skill-card-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #FF6A00;
+  box-shadow: 0 0 8px #FF6A00;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.skill-card-center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.skill-card-icon-halo {
+  width: 82px;
+  height: 82px;
+  border-radius: 22px;
+  background: radial-gradient(circle, #251B14 0%, #171717 100%);
+  border: 1px solid rgba(255, 106, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FF6A00;
+  margin-bottom: 16px;
+  box-shadow: 0 0 28px rgba(255, 106, 0, 0.2), inset 0 0 14px rgba(255, 106, 0, 0.1);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.skill-flip-container:hover .skill-card-icon-halo {
+  transform: scale(1.05);
+  border-color: #FF6A00;
+}
+
+.skill-card-title {
+  font-size: 21px;
+  font-weight: 700;
+  color: #F5F5F5;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.skill-card-subtitle {
+  font-size: 13px;
+  color: #A1A1AA;
+}
+
+.skill-card-flip-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8E8E93;
+  padding: 9px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.skill-flip-container:hover .skill-card-flip-prompt {
+  color: #FF8C42;
+  border-color: rgba(255, 106, 0, 0.3);
+  background: rgba(255, 106, 0, 0.08);
+}
+
+.skill-flip-back {
+  background: linear-gradient(170deg, #181512 0%, #111111 100%);
+  border: 1px solid #FF6A00;
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.8), 0 0 30px -5px rgba(255, 106, 0, 0.3);
+  transform: rotateY(180deg);
+}
+
+.skill-card-back-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #D4D4D8;
+  margin-top: 16px;
+  text-align: left;
+}
+
+.skill-card-back-return {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #FF6A00;
+  padding: 9px 14px;
+  border-radius: 8px;
+  background: rgba(255, 106, 0, 0.08);
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+/* =========================================================
+   3. REACT BITS: FOLDER FLOAT (NO DIALOG BOX, TAP TO POP UP)
+   ========================================================= */
+.reactbits-folder-float-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+/* Cloud Container: manages tucked vs popped state */
+.reactbits-folder-cloud-container {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* The floating pill itself */
+.reactbits-folder-floating-pill {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid #333333;
+  color: #F5F5F5;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 10px rgba(255, 106, 0, 0.15);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.4s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease,
+              background-color 0.25s ease;
+}
+
+/* Closed state: pills are hidden and tucked inside folder */
+.cloud-tucked .reactbits-folder-floating-pill {
+  transform: translate(0, 60px) scale(0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Popped state: pills spring out to their respective cloud targets */
+.cloud-popped .reactbits-folder-floating-pill {
+  transform: translate(var(--target-x), var(--target-y)) rotate(var(--target-rotate));
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.reactbits-folder-floating-pill:hover {
+  transform: translate(var(--target-x), calc(var(--target-y) - 6px)) scale(1.1) rotate(0deg) !important;
+  border-color: #FF6A00 !important;
+  background: #241A13 !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 106, 0, 0.55) !important;
+  z-index: 15;
+}
+
+.reactbits-pill-icon {
+  color: #FF6A00;
+}
+
+.reactbits-pill-text {
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Zero Gravity Bobbing Floating Animations */
+@keyframes pillBobA {
+  0%, 100% {
+    transform: translate(var(--target-x), var(--target-y)) rotate(var(--target-rotate));
+  }
+  50% {
+    transform: translate(var(--target-x), calc(var(--target-y) - 9px)) rotate(calc(var(--target-rotate) + 2deg));
+  }
+}
+
+@keyframes pillBobB {
+  0%, 100% {
+    transform: translate(var(--target-x), var(--target-y)) rotate(var(--target-rotate));
+  }
+  50% {
+    transform: translate(calc(var(--target-x) + 4px), calc(var(--target-y) - 11px)) rotate(calc(var(--target-rotate) - 2deg));
+  }
+}
+
+@keyframes pillBobC {
+  0%, 100% {
+    transform: translate(var(--target-x), var(--target-y)) rotate(var(--target-rotate));
+  }
+  50% {
+    transform: translate(var(--target-x), calc(var(--target-y) - 7px)) rotate(calc(var(--target-rotate) + 1.5deg));
+  }
+}
+
+@keyframes pillBobD {
+  0%, 100% {
+    transform: translate(var(--target-x), var(--target-y)) rotate(var(--target-rotate));
+  }
+  50% {
+    transform: translate(calc(var(--target-x) - 4px), calc(var(--target-y) - 10px)) rotate(calc(var(--target-rotate) - 1.5deg));
+  }
+}
+
+.reactbits-float-a { animation: pillBobA 4.8s ease-in-out infinite; }
+.reactbits-float-b { animation: pillBobB 5.4s ease-in-out infinite; }
+.reactbits-float-c { animation: pillBobC 4.2s ease-in-out infinite; }
+.reactbits-float-d { animation: pillBobD 5.1s ease-in-out infinite; }
+
+/* 3D Physical Folder Body */
+.reactbits-folder-body {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  perspective: 800px;
+}
+
+/* Folder Top Tab */
+.reactbits-folder-tab {
+  position: absolute;
+  top: -16px;
+  left: 18px;
+  height: 18px;
+  padding: 0 14px;
+  background: #1C1C1C;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-top: 2px solid #FF6A00;
+  border-left: 1px solid #2B2B2B;
+  border-right: 1px solid #2B2B2B;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  transition: border-color 0.25s ease;
+}
+
+.folder-open .reactbits-folder-tab {
+  border-top-color: #FF8C42;
+}
+
+.reactbits-folder-tab-stripe {
+  width: 14px;
+  height: 2px;
+  background: #FF6A00;
+  border-radius: 1px;
+}
+
+.reactbits-folder-tab-title {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 600;
+  color: #FF8C42;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Folder Back Plate */
+.reactbits-folder-backplate {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #1A1A1A 0%, #121212 100%);
+  border: 1px solid #2B2B2B;
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+
+.reactbits-folder-pocket-interior {
+  position: absolute;
+  top: 20px;
+  left: 12px;
+  right: 12px;
+  height: 90px;
+  border-radius: 12px;
+  background: #0E0E0E;
+  border: 1px dashed rgba(255, 106, 0, 0.2);
+  overflow: hidden;
+}
+
+.reactbits-folder-pocket-glow {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 20px;
+  background: radial-gradient(ellipse at bottom, rgba(255, 106, 0, 0.3) 0%, transparent 80%);
+}
+
+/* 3D Front Flap (Tilts forward when open) */
+.reactbits-folder-frontflap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 155px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #1D1D1D 0%, #151515 100%);
+  border: 1px solid #303030;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform-origin: bottom center;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 20px;
+  box-sizing: border-box;
+}
+
+/* When folder is open, front flap tilts forward */
+.folder-open .reactbits-folder-frontflap {
+  transform: perspective(700px) rotateX(-35deg);
+  border-color: rgba(255, 106, 0, 0.6) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 106, 0, 0.35) !important;
+}
+
+.reactbits-folder-frontflap-cutout {
+  position: absolute;
+  top: 0;
+  right: 24px;
+  width: 50px;
+  height: 4px;
+  background: rgba(255, 106, 0, 0.4);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.reactbits-folder-frontflap-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.reactbits-folder-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reactbits-folder-icon-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #221A14;
+  border: 1px solid rgba(255, 106, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FF6A00;
+  box-shadow: 0 0 12px rgba(255, 106, 0, 0.2);
+}
+
+.reactbits-folder-main-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #F5F5F5;
+  letter-spacing: -0.01em;
+}
+
+.reactbits-folder-sub-label {
+  font-size: 11.5px;
+  color: #8E8E93;
+}
+
+.reactbits-folder-open-cue {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #171717;
+  border: 1px solid #282828;
+  transition: all 0.2s ease;
+}
+
+.reactbits-folder-float-wrapper:hover .reactbits-folder-open-cue {
+  background: rgba(255, 106, 0, 0.1);
+  border-color: rgba(255, 106, 0, 0.35);
+}
+
+.reactbits-folder-cue-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #E4E4E7;
+}
+
+.reactbits-folder-float-wrapper:hover .reactbits-folder-cue-text {
+  color: #FF6A00;
+}
+
+/* Floating Skill Count Badge below folder */
+.reactbits-folder-counter-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: #A1A1AA;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
+@media (max-width: 1024px) {
+  .skills-interactive-container {
+    gap: 22px;
+  }
+  
+  .reactbits-option-wheel {
+    max-width: 300px;
+    height: 360px;
+  }
+  
+  .skill-flip-container {
+    height: 360px;
+  }
+
+  .reactbits-folder-float-wrapper {
+    height: 360px;
+  }
+}
+
+@media (max-width: 860px) {
+  .skills-interactive-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 44px;
+  }
+
+  .skills-column {
+    max-width: 440px;
+    width: 100%;
+  }
+
+  .reactbits-option-wheel {
+    max-width: 340px;
+  }
+
+  .reactbits-folder-float-wrapper {
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .reactbits-option-wheel {
+    max-width: 310px;
+    height: 340px;
+  }
+
+  .skill-flip-container {
+    height: 360px;
+  }
+
+  .reactbits-folder-float-wrapper {
+    max-width: 310px;
+    height: 340px;
+  }
+
+  .reactbits-folder-floating-pill {
+    padding: 5px 10px;
+  }
+
+  .reactbits-pill-text {
+    font-size: 11px;
+  }
+}
+
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .reactbits-float-a,
+  .reactbits-float-b,
+  .reactbits-float-c,
+  .reactbits-float-d {
+    animation: none !important;
+  }
+  .skill-card-badge-dot {
+    animation: none !important;
+  }
+  .reactbits-wheel-drum,
+  .skill-flip-inner,
+  .reactbits-folder-frontflap,
+  .reactbits-folder-floating-pill {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,89 @@
+.true-focus-container {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  align-items: center;
+  user-select: none;
+}
+
+.true-focus-word {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  transition: filter 0.3s ease, opacity 0.3s ease, color 0.3s ease;
+  will-change: filter, opacity;
+}
+
+.true-focus-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+  border: 1.5px solid transparent;
+  border-radius: 4px;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, width, height;
+}
+
+/* Corner bracket accents */
+.true-focus-corner {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-color: inherit;
+}
+
+.true-focus-corner.top-left {
+  top: -2px;
+  left: -2px;
+  border-top: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+}
+
+.true-focus-corner.top-right {
+  top: -2px;
+  right: -2px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+}
+
+.true-focus-corner.bottom-left {
+  bottom: -2px;
+  left: -2px;
+  border-bottom: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+}
+
+.true-focus-corner.bottom-right {
+  bottom: -2px;
+  right: -2px;
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+}
+
+/* Subtle breathing glow for single-word focus frames */
+.true-focus-box.single-word {
+  animation: trueFocusBreathe 3s ease-in-out infinite;
+}
+
+@keyframes trueFocusBreathe {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(255, 106, 0, 0.4), inset 0 0 6px rgba(255, 106, 0, 0.25);
+    opacity: 0.92;
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(255, 106, 0, 0.75), inset 0 0 12px rgba(255, 106, 0, 0.45);
+    opacity: 1;
+  }
+}
+
+.true-focus-container:hover .true-focus-box {
+  filter: brightness(1.2);
+}
+
+.true-focus-container:hover .true-focus-corner {
+  border-width: 2.5px;
+}
+
