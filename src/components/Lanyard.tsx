@@ -14,7 +14,8 @@ function createLanyardStrapTexture(): THREE.CanvasTexture {
   const canvas = document.createElement('canvas');
   canvas.width = 1024;
   canvas.height = 128;
-  const ctx = canvas.getContext('2d')!;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return new THREE.CanvasTexture(canvas);
 
   // Royal Blue base strap
   ctx.fillStyle = '#0F3460';
@@ -82,11 +83,17 @@ export const Lanyard: React.FC<LanyardProps> = ({ className = '' }) => {
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
     camera.position.set(0, -0.05, 7.8);
 
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance'
-    });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance'
+      });
+    } catch (e) {
+      console.warn('WebGL initialization failed:', e);
+      return;
+    }
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.shadowMap.enabled = true;
@@ -579,10 +586,11 @@ export const Lanyard: React.FC<LanyardProps> = ({ className = '' }) => {
       frontTex.dispose();
       backTex.dispose();
       strapTex.dispose();
-      renderer.dispose();
-
-      if (renderer.domElement.parentNode) {
-        renderer.domElement.parentNode.removeChild(renderer.domElement);
+      if (renderer) {
+        renderer.dispose();
+        if (renderer.domElement && renderer.domElement.parentNode) {
+          renderer.domElement.parentNode.removeChild(renderer.domElement);
+        }
       }
     };
   }, []);

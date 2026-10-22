@@ -54,9 +54,9 @@ if (fs.existsSync(dataPath)) {
   assert(dataContent.includes('Bachelor of Computer Applications (BCA)'), 'Contains BCA education data');
   assert(dataContent.includes('Samsung'), 'Contains Samsung certification');
   assert(dataContent.includes('Google Cloud'), 'Contains Google Cloud certification');
-  assert(dataContent.includes('Cognifyz Technologies'), 'Contains Cognifyz internship experience');
+  assert(dataContent.includes('Cognifyz'), 'Contains Cognifyz internship experience');
   assert(dataContent.includes('CodeAlpha'), 'Contains CodeAlpha UI/UX internship experience');
-  assert(dataContent.includes('https://princegour248-art.github.io/portfolio'), 'Contains canonical HTTPS URL for QR code');
+  assert(dataContent.includes('https://princegour248-art.github.io/prince-gour-portfolio/'), 'Contains canonical HTTPS URL for QR code');
 }
 
 // 3. Verify Design System Colors

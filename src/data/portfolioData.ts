@@ -96,7 +96,7 @@ export const PORTFOLIO_CONFIG = {
       availability: "Open to Internships & Collaborative Projects"
     },
     meta: {
-      canonicalUrl: "https://princegour248-art.github.io/portfolio",
+      canonicalUrl: "https://princegour248-art.github.io/prince-gour-portfolio/",
       title: "Prince Gour | AI Enthusiast & Software Developer Portfolio",
       description: "Official portfolio of Prince Gour: BCA student, software developer, and AI enthusiast showcasing real projects, technical skills, certifications, and resume."
     }
