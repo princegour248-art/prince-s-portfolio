@@ -14,16 +14,16 @@
 .scroll-stack-container {
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  gap: 60px;
   margin-top: 48px;
   position: relative;
-  padding-bottom: 60px;
+  padding-bottom: 160px;
 }
 
 /* Scroll Stack Card */
 .scroll-stack-card {
   position: sticky;
-  top: calc(90px + var(--stack-offset, 0px));
+  top: calc(88px + var(--stack-offset, 0px));
   z-index: var(--stack-index, 1);
   background: #141414;
   border: 1px solid #262626;
@@ -31,8 +31,9 @@
   padding: 36px;
   box-sizing: border-box;
   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 25px -10px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.25s ease,
+  transform-origin: top center;
+  will-change: transform, filter;
+  transition: border-color 0.25s ease,
               box-shadow 0.25s ease;
   overflow: hidden;
 }
@@ -426,14 +427,16 @@
 
 @media (max-width: 640px) {
   .scroll-stack-card {
-    position: static;
-    margin-bottom: 24px;
-    padding: 22px;
+    position: sticky;
+    top: calc(75px + var(--stack-offset-mobile, 0px));
+    margin-bottom: 0;
+    padding: 20px;
+    border-radius: 16px;
   }
 
   .scroll-stack-container {
-    gap: 24px;
-    padding-bottom: 20px;
+    gap: 36px;
+    padding-bottom: 120px;
   }
 
   .scroll-stack-topbar {

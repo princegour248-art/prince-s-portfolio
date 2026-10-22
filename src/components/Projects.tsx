@@ -116,6 +116,71 @@ export const Projects: React.FC = () => {
     }
   };
 
+  // Dynamic Scroll Stack Depth & Scaling Effect
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const updateStack = () => {
+      const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
+      if (cards.length < 2) {
+        ticking = false;
+        return;
+      }
+
+      const isMobile = window.innerWidth <= 640;
+      const stickyTop = isMobile ? 75 : 88;
+      const stepOffset = isMobile ? 16 : 28;
+
+      cards.forEach((card, i) => {
+        let accumulatedScale = 1;
+        let accumulatedBrightness = 1;
+
+        for (let j = i + 1; j < cards.length; j++) {
+          const nextCard = cards[j];
+          if (!nextCard) continue;
+
+          const nextRect = nextCard.getBoundingClientRect();
+          const cardRect = card.getBoundingClientRect();
+
+          const targetSticky = stickyTop + j * stepOffset;
+          const distance = nextRect.top - targetSticky;
+          const transitionRange = Math.max(1, cardRect.height * 0.85);
+          const progress = Math.max(0, Math.min(1, 1 - distance / transitionRange));
+
+          accumulatedScale -= progress * 0.045;
+          accumulatedBrightness -= progress * 0.14;
+        }
+
+        const finalScale = Math.max(0.86, accumulatedScale);
+        const finalBrightness = Math.max(0.65, accumulatedBrightness);
+
+        card.style.transform = `scale(${finalScale.toFixed(3)})`;
+        card.style.transformOrigin = 'top center';
+        card.style.filter = `brightness(${finalBrightness.toFixed(2)})`;
+      });
+
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateStack);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    updateStack();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [featuredProjects.length]);
+
   return (
     <section id="projects" className="section">
       <div className="container">
@@ -143,9 +208,13 @@ export const Projects: React.FC = () => {
             return (
               <div
                 key={project.id}
+                ref={(el) => {
+                  cardRefs.current[idx] = el;
+                }}
                 className="scroll-stack-card"
                 style={{
-                  '--stack-offset': `${idx * 30}px`,
+                  '--stack-offset': `${idx * 28}px`,
+                  '--stack-offset-mobile': `${idx * 16}px`,
                   '--stack-index': idx + 1
                 } as React.CSSProperties}
               >
