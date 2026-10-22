@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUp, Mail } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './icons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 
 export const Footer: React.FC = () => {
@@ -82,6 +82,17 @@ export const Footer: React.FC = () => {
             >
               <LinkedinIcon size={16} /> <span>LinkedIn</span>
             </a>
+            {(personal.contact as { instagram?: string }).instagram && (
+              <a
+                href={(personal.contact as { instagram?: string }).instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#A6A6A6', display: 'flex', alignItems: 'center', gap: '6px' }}
+                title="Instagram"
+              >
+                <InstagramIcon size={16} /> <span>Instagram</span>
+              </a>
+            )}
             <a
               href={`mailto:${personal.contact.email}`}
               style={{ color: '#A6A6A6', display: 'flex', alignItems: 'center', gap: '6px' }}

@@ -89,14 +89,14 @@ export const SocialSection: React.FC = () => {
     {
       id: 'instagram',
       name: 'Instagram',
-      handle: `@${(contact as { instagramUsername?: string }).instagramUsername || 'princegour248'}`,
-      url: (contact as { instagram?: string }).instagram || 'https://www.instagram.com/princegour248',
+      handle: `@${(contact as { instagramUsername?: string }).instagramUsername || '_prince2005__'}`,
+      url: (contact as { instagram?: string }).instagram || 'https://www.instagram.com/_prince2005__/',
       badge: 'Visual Updates',
       icon: InstagramIcon,
       description:
         'Personal updates, developer lifestyle, tech snapshots, behind-the-scenes engineering, and creative visual projects.',
       primaryActionText: 'Open Instagram',
-      copyValue: (contact as { instagram?: string }).instagram || 'https://www.instagram.com/princegour248',
+      copyValue: (contact as { instagram?: string }).instagram || 'https://www.instagram.com/_prince2005__/',
       copyLabel: 'Copy Link'
     }
   ];

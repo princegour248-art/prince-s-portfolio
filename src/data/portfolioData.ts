@@ -92,8 +92,8 @@ export const PORTFOLIO_CONFIG = {
       github: "https://github.com/princegour248-art",
       githubUsername: "princegour248-art",
       linkedin: "https://www.linkedin.com/in/prince-gour-468b17315",
-      instagram: "https://www.instagram.com/princegour248",
-      instagramUsername: "princegour248",
+      instagram: "https://www.instagram.com/_prince2005__/",
+      instagramUsername: "_prince2005__",
       location: "India",
       availability: "Open to Internships & Collaborative Projects"
     },
