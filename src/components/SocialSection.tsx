@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Mail,
-  Globe,
   Copy,
   Check,
   ArrowUpRight,
   MapPin,
   Clock
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './icons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 import './SocialSection.css';
 
@@ -88,17 +87,17 @@ export const SocialSection: React.FC = () => {
       copyLabel: 'Copy Email'
     },
     {
-      id: 'portfolio',
-      name: 'Digital Portfolio',
-      handle: 'princegour248-art.github.io/portfolio',
-      url: personal.meta.canonicalUrl,
-      badge: 'Live Showcase',
-      icon: Globe,
+      id: 'instagram',
+      name: 'Instagram',
+      handle: `@${(contact as { instagramUsername?: string }).instagramUsername || 'princegour248'}`,
+      url: (contact as { instagram?: string }).instagram || 'https://www.instagram.com/princegour248',
+      badge: 'Visual Updates',
+      icon: InstagramIcon,
       description:
-        'Official interactive developer portfolio featuring simulated terminals, 3D career archives, verified certifications, ATS resume, and scannable QR credentials.',
-      primaryActionText: 'View Live Site',
-      copyValue: personal.meta.canonicalUrl,
-      copyLabel: 'Share Link'
+        'Personal updates, developer lifestyle, tech snapshots, behind-the-scenes engineering, and creative visual projects.',
+      primaryActionText: 'Open Instagram',
+      copyValue: (contact as { instagram?: string }).instagram || 'https://www.instagram.com/princegour248',
+      copyLabel: 'Copy Link'
     }
   ];
 
@@ -130,7 +129,13 @@ export const SocialSection: React.FC = () => {
                 {/* Top Identity Block */}
                 <div>
                   <div className="social-card-header">
-                    <div className="social-card-identity">
+                    <a
+                      href={platform.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-card-identity"
+                      style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
                       <div className="social-platform-icon-box">
                         <Icon size={22} />
                       </div>
@@ -138,7 +143,7 @@ export const SocialSection: React.FC = () => {
                         <h3 className="social-platform-name">{platform.name}</h3>
                         <span className="social-platform-handle">{platform.handle}</span>
                       </div>
-                    </div>
+                    </a>
 
                     <span className="social-badge-pill">{platform.badge}</span>
                   </div>
