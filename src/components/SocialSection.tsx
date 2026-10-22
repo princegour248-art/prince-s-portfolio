@@ -51,7 +51,7 @@ export const SocialSection: React.FC = () => {
     {
       id: 'linkedin',
       name: 'LinkedIn',
-      handle: 'in/princegour',
+      handle: 'in/prince-gour-468b17315',
       url: contact.linkedin,
       badge: 'Career Network',
       icon: LinkedinIcon,

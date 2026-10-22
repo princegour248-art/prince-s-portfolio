@@ -54,7 +54,7 @@ export function generateClientResumePdf(): void {
   // Contact line
   doc.setFontSize(9);
   doc.setTextColor(...grayColor);
-  const contactText = `Email: ${PORTFOLIO_CONFIG.personal.contact.email}  |  GitHub: github.com/${PORTFOLIO_CONFIG.personal.contact.githubUsername}  |  Location: ${PORTFOLIO_CONFIG.personal.contact.location}`;
+  const contactText = `Email: ${PORTFOLIO_CONFIG.personal.contact.email}  |  GitHub: github.com/${PORTFOLIO_CONFIG.personal.contact.githubUsername}  |  LinkedIn: linkedin.com/in/prince-gour-468b17315  |  Location: ${PORTFOLIO_CONFIG.personal.contact.location}`;
   doc.text(contactText, margin, y);
   y += 6;
 

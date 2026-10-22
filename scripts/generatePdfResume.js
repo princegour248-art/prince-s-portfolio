@@ -54,7 +54,7 @@ function generateResume() {
   // Contact links line
   doc.setFontSize(9);
   doc.setTextColor(...grayColor);
-  const contactText = 'Email: princegour248@gmail.com  |  GitHub: github.com/princegour248-art  |  LinkedIn: linkedin.com/in/princegour  |  India';
+  const contactText = 'Email: princegour248@gmail.com  |  GitHub: github.com/princegour248-art  |  LinkedIn: linkedin.com/in/prince-gour-468b17315  |  India';
   doc.text(contactText, margin, y);
   y += 6;
 
