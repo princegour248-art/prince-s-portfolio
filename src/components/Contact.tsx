@@ -1,12 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Mail, Send, MapPin, CheckCircle2, AlertCircle } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
+import { StrokeText } from './StrokeText';
+import './Contact.css';
 
 export const Contact: React.FC = () => {
   const { contact } = PORTFOLIO_CONFIG.personal;
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.12 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,52 +57,58 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="section">
+    <section id="contact" ref={sectionRef} className="section contact-section">
+      {/* High-Tech Animated Ambient Orbs */}
+      <div className="contact-ambient-orb contact-ambient-orb-1" />
+      <div className="contact-ambient-orb contact-ambient-orb-2" />
+
       <div className="container">
         {/* Section Header */}
-        <div style={{ marginBottom: '40px' }}>
-          <span className="section-tag">09 &bull; Get In Touch</span>
-          <h2 className="section-title">Contact & Connect</h2>
+        <div className={`contact-header ${isVisible ? 'is-visible' : ''}`}>
+          <div style={{ marginBottom: '12px' }}>
+            <span className="section-tag">09 &bull; Get In Touch</span>
+          </div>
+          <h1 className="section-title stroke-heading">
+            <StrokeText text="Contact & Connect" accentText="&" />
+          </h1>
           <p className="section-subtitle">
             Open to internship opportunities, technical collaborations, and software engineering inquiries.
           </p>
         </div>
 
         {/* 2-Column Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: '40px', alignItems: 'start' }} className="contact-grid">
-          {/* Left Column: Direct Contact Info Cards */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div className="contact-grid">
+          {/* Left Column: Direct Contact Info Cards with Staggered Entrance & Dynamic Hover */}
+          <div className="contact-cards-column">
             {/* Email Card */}
             <a
               href={`mailto:${contact.email}`}
-              className="card"
+              className={`card contact-card-animated ${isVisible ? 'is-visible' : ''}`}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '16px',
                 padding: '20px',
                 backgroundColor: '#161616',
-                transition: 'border-color 150ms ease'
+                transitionDelay: '0.08s'
               }}
             >
               <div
+                className="contact-card-icon-box"
                 style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '8px',
                   backgroundColor: 'rgba(232, 117, 36, 0.1)',
-                  border: '1px solid rgba(232, 117, 36, 0.25)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
+                  border: '1px solid rgba(232, 117, 36, 0.25)'
                 }}
               >
                 <Mail size={20} color="#E87524" />
               </div>
               <div>
-                <span style={{ display: 'block', fontSize: '11px', color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Direct Email</span>
-                <span style={{ fontSize: '14.5px', fontWeight: 600, color: '#F5F2ED' }}>{contact.email}</span>
+                <span style={{ display: 'block', fontSize: '11px', color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Direct Email
+                </span>
+                <span style={{ fontSize: '14.5px', fontWeight: 600, color: '#F5F2ED' }}>
+                  {contact.email}
+                </span>
               </div>
             </a>
 
@@ -89,33 +117,32 @@ export const Contact: React.FC = () => {
               href={contact.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="card"
+              className={`card contact-card-animated ${isVisible ? 'is-visible' : ''}`}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '16px',
                 padding: '20px',
-                backgroundColor: '#161616'
+                backgroundColor: '#161616',
+                transitionDelay: '0.18s'
               }}
             >
               <div
+                className="contact-card-icon-box"
                 style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '8px',
                   backgroundColor: 'rgba(232, 117, 36, 0.1)',
-                  border: '1px solid rgba(232, 117, 36, 0.25)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
+                  border: '1px solid rgba(232, 117, 36, 0.25)'
                 }}
               >
                 <GithubIcon size={20} color="#E87524" />
               </div>
               <div>
-                <span style={{ display: 'block', fontSize: '11px', color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>GitHub Profile</span>
-                <span style={{ fontSize: '14.5px', fontWeight: 600, color: '#F5F2ED' }}>github.com/{contact.githubUsername}</span>
+                <span style={{ display: 'block', fontSize: '11px', color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  GitHub Profile
+                </span>
+                <span style={{ fontSize: '14.5px', fontWeight: 600, color: '#F5F2ED' }}>
+                  github.com/{contact.githubUsername}
+                </span>
               </div>
             </a>
 
@@ -124,71 +151,72 @@ export const Contact: React.FC = () => {
               href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="card"
+              className={`card contact-card-animated ${isVisible ? 'is-visible' : ''}`}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '16px',
                 padding: '20px',
-                backgroundColor: '#161616'
+                backgroundColor: '#161616',
+                transitionDelay: '0.28s'
               }}
             >
               <div
+                className="contact-card-icon-box"
                 style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '8px',
                   backgroundColor: 'rgba(232, 117, 36, 0.1)',
-                  border: '1px solid rgba(232, 117, 36, 0.25)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
+                  border: '1px solid rgba(232, 117, 36, 0.25)'
                 }}
               >
                 <LinkedinIcon size={20} color="#E87524" />
               </div>
               <div>
-                <span style={{ display: 'block', fontSize: '11px', color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Professional Network</span>
-                <span style={{ fontSize: '14.5px', fontWeight: 600, color: '#F5F2ED' }}>LinkedIn Profile</span>
+                <span style={{ display: 'block', fontSize: '11px', color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Professional Network
+                </span>
+                <span style={{ fontSize: '14.5px', fontWeight: 600, color: '#F5F2ED' }}>
+                  LinkedIn Profile
+                </span>
               </div>
             </a>
 
             {/* Location Pill Card */}
             <div
-              className="card"
+              className={`card contact-card-animated ${isVisible ? 'is-visible' : ''}`}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '16px',
                 padding: '20px',
-                backgroundColor: '#161616'
+                backgroundColor: '#161616',
+                transitionDelay: '0.38s'
               }}
             >
               <div
+                className="contact-card-icon-box"
                 style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '8px',
                   backgroundColor: '#1F1F1F',
-                  border: '1px solid #303030',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
+                  border: '1px solid #303030'
                 }}
               >
                 <MapPin size={20} color="#A6A6A6" />
               </div>
               <div>
-                <span style={{ display: 'block', fontSize: '11px', color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Base Location</span>
-                <span style={{ fontSize: '14.5px', fontWeight: 600, color: '#F5F2ED' }}>{contact.location}</span>
+                <span style={{ display: 'block', fontSize: '11px', color: '#737373', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Base Location
+                </span>
+                <span style={{ fontSize: '14.5px', fontWeight: 600, color: '#F5F2ED' }}>
+                  {contact.location}
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Validated Message Form */}
-          <div className="card" style={{ padding: '32px', backgroundColor: '#161616' }}>
+          {/* Right Column: Validated Message Form with Animated Inputs & Action */}
+          <div
+            className={`contact-form-card ${isVisible ? 'is-visible' : ''}`}
+            style={{ transitionDelay: '0.2s' }}
+          >
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#F5F2ED', marginBottom: '8px' }}>
               Send a Direct Message
             </h3>
@@ -207,15 +235,7 @@ export const Contact: React.FC = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Alex Johnson"
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: '8px',
-                    backgroundColor: '#111111',
-                    border: '1px solid #303030',
-                    color: '#F5F2ED',
-                    fontSize: '13.5px'
-                  }}
+                  className="contact-input"
                 />
               </div>
 
@@ -229,15 +249,7 @@ export const Contact: React.FC = () => {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="e.g. alex@example.com"
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: '8px',
-                    backgroundColor: '#111111',
-                    border: '1px solid #303030',
-                    color: '#F5F2ED',
-                    fontSize: '13.5px'
-                  }}
+                  className="contact-input"
                 />
               </div>
 
@@ -250,15 +262,7 @@ export const Contact: React.FC = () => {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="e.g. Internship Inquiry / Project Discussion"
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: '8px',
-                    backgroundColor: '#111111',
-                    border: '1px solid #303030',
-                    color: '#F5F2ED',
-                    fontSize: '13.5px'
-                  }}
+                  className="contact-input"
                 />
               </div>
 
@@ -272,31 +276,18 @@ export const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Write your message here..."
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: '8px',
-                    backgroundColor: '#111111',
-                    border: '1px solid #303030',
-                    color: '#F5F2ED',
-                    fontSize: '13.5px',
-                    resize: 'vertical'
-                  }}
+                  className="contact-input"
+                  style={{ resize: 'vertical' }}
                 />
               </div>
 
               {status.message && (
                 <div
+                  className="contact-status-alert"
                   style={{
-                    padding: '10px 14px',
-                    borderRadius: '6px',
-                    fontSize: '12.5px',
                     backgroundColor: status.type === 'success' ? '#112211' : '#221111',
                     border: status.type === 'success' ? '1px solid #16A34A' : '1px solid #E11D48',
-                    color: status.type === 'success' ? '#4ADE80' : '#FB7185',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
+                    color: status.type === 'success' ? '#4ADE80' : '#FB7185'
                   }}
                 >
                   {status.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
@@ -304,27 +295,18 @@ export const Contact: React.FC = () => {
                 </div>
               )}
 
-              <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '6px' }}>
-                <Send size={15} />
+              <button type="submit" className="contact-submit-btn">
+                <span className="contact-submit-icon">
+                  <Send size={15} />
+                </span>
                 <span>Send Message via Email</span>
               </button>
             </form>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 840px) {
-          .contact-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-        @media (max-width: 600px) {
-          .contact-grid > div.card {
-            padding: 20px 16px !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };
+
+export default Contact;

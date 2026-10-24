@@ -1,10 +1,12 @@
-import React from 'react';
-import { ArrowUp, Mail } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowUp, Mail, QrCode } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
+import { QrModal } from './QrModal';
 
 export const Footer: React.FC = () => {
   const { personal } = PORTFOLIO_CONFIG;
+  const [qrModalOpen, setQrModalOpen] = useState(false);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -102,16 +104,30 @@ export const Footer: React.FC = () => {
             </a>
           </div>
 
-          {/* Back to top button */}
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="btn btn-secondary btn-sm"
-            style={{ borderRadius: '999px' }}
-          >
-            <span>Back to top</span>
-            <ArrowUp size={14} />
-          </button>
+          {/* Action buttons */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <button
+              type="button"
+              onClick={() => setQrModalOpen(true)}
+              className="btn btn-secondary btn-sm"
+              style={{ borderRadius: '999px', gap: '6px' }}
+              title="Open scannable mobile QR code (Optimized for 2GB RAM)"
+            >
+              <QrCode size={13} color="#FF6A00" />
+              <span>Mobile QR</span>
+            </button>
+
+            {/* Back to top button */}
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="btn btn-secondary btn-sm"
+              style={{ borderRadius: '999px' }}
+            >
+              <span>Back to top</span>
+              <ArrowUp size={14} />
+            </button>
+          </div>
         </div>
 
         {/* Bottom copyright notice */}
@@ -128,9 +144,11 @@ export const Footer: React.FC = () => {
           }}
         >
           <span>&copy; {new Date().getFullYear()} Prince Gour. Handcrafted developer portfolio & resume.</span>
-          <span>Designed with Orange & Black Minimal Architecture &bull; No AI-Slop</span>
+          <span>⚡ 2GB RAM Mobile Optimized &bull; Orange & Obsidian Theme</span>
         </div>
       </div>
+
+      <QrModal isOpen={qrModalOpen} onClose={() => setQrModalOpen(false)} />
     </footer>
   );
 };

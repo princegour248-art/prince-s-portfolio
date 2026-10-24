@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
+import { InteractiveLanding } from './components/InteractiveLanding';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Skills } from './components/Skills';
@@ -12,10 +13,11 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
 export const App: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string>('hero');
+  const [activeSection, setActiveSection] = useState<string>('landing');
 
   useEffect(() => {
     const sections = [
+      'landing',
       'hero',
       'about',
       'skills',
@@ -72,6 +74,7 @@ export const App: React.FC = () => {
       <Navbar activeSection={activeSection} />
 
       <main>
+        <InteractiveLanding />
         <Hero />
         <About />
         <Skills />

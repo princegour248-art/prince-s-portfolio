@@ -17,6 +17,7 @@ import {
   Code2
 } from 'lucide-react';
 import { PORTFOLIO_CONFIG, type ExperienceItem } from '../data/portfolioData';
+import { StrokeText } from './StrokeText';
 import './Experience.css';
 
 interface FolderConfig {
@@ -134,7 +135,9 @@ export const Experience: React.FC = () => {
           <div style={{ marginBottom: '12px' }}>
             <span className="section-tag">INTERNSHIP / CAREER ARCHIVE</span>
           </div>
-          <h2 className="section-title">Explore My Experience.</h2>
+          <h1 className="section-title stroke-heading">
+            <StrokeText text="Explore My Experience." />
+          </h1>
           <p className="section-subtitle">
             A collection of my internship records and professional credentials.
           </p>

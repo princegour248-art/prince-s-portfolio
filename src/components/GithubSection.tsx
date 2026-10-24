@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Star, GitFork, ExternalLink, RefreshCw, AlertCircle } from 'lucide-react';
 import { GithubIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
+import { StrokeText } from './StrokeText';
 
 interface Repository {
   name: string;
@@ -73,7 +74,9 @@ export const GithubSection: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px', marginBottom: '40px' }}>
           <div>
             <span className="section-tag">08 &bull; Open Source</span>
-            <h2 className="section-title">GitHub Activity</h2>
+            <h1 className="section-title stroke-heading">
+              <StrokeText text="GitHub Activity" />
+            </h1>
             <p className="section-subtitle">
               Live public repositories fetched directly from GitHub (<code>github.com/{contact.githubUsername}</code>).
             </p>

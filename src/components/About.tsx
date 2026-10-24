@@ -3,6 +3,7 @@ import { Cpu, Globe, Code2, Terminal, Sparkles, GraduationCap, RotateCcw, ArrowD
 import { TrueFocus } from './TrueFocus';
 import { FallingText, type FallingDetailItem } from './FallingText';
 import { VariableProximity } from './VariableProximity';
+import { StrokeText } from './StrokeText';
 
 export const About: React.FC = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -204,11 +205,11 @@ export const About: React.FC = () => {
             </span>
           </div>
 
-          {/* Interactive Tap-to-Fall "About Me" Heading */}
+          {/* Interactive Tap-to-Fall "About Me" Heading with Stroke Text Effect */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
-            <h2
+            <h1
               onClick={toggleFall}
-              className="section-title"
+              className="section-title stroke-heading"
               style={{
                 color: '#F5F5F5',
                 margin: 0,
@@ -220,7 +221,7 @@ export const About: React.FC = () => {
               }}
               title="Click or tap to drop elements to the bottom border"
             >
-              <span>About Me</span>
+              <StrokeText text="About Me" as="span" />
               <span
                 style={{
                   fontSize: '11px',
@@ -240,7 +241,7 @@ export const About: React.FC = () => {
                 {isFallen ? <RotateCcw size={10} /> : <ArrowDown size={10} />}
                 <span>{isFallen ? 'RESTORE' : 'TAP TO FALL'}</span>
               </span>
-            </h2>
+            </h1>
           </div>
 
           {/* Interactive TrueFocus Name & Identity Header (Falls to bottom border on tap) */}

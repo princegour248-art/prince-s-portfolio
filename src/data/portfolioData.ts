@@ -77,14 +77,14 @@ export const PORTFOLIO_CONFIG = {
     about: {
       paragraphs: [
         "I am an enthusiastic Bachelor of Computer Applications (BCA) student with a passion for software engineering, artificial intelligence, and modern web technologies. My technical curiosity revolves around bridging theoretical computer science principles with practical, user-centric software.",
-        "From engineering local-first academic assistance systems like Master Sahab to designing transparent grievance portals for campus workflows, I approach every project with an architectural mindset: clean separation of concerns, fast feedback loops, and zero unnecessary visual bloat.",
+        "From engineering local-first academic assistance systems like Alpha to designing transparent grievance portals for campus workflows, I approach every project with an architectural mindset: clean separation of concerns, fast feedback loops, and zero unnecessary visual bloat.",
         "I enjoy diving deep into full-stack development with Python and JavaScript, integrating generative AI endpoints, designing accessible UI/UX systems, and analyzing data patterns to derive actionable real-world insights."
       ],
       highlights: [
         { label: "Focus Areas", value: "AI Integration, Full-Stack Web, UI/UX" },
         { label: "Degree Path", value: "BCA (Bachelor of Computer Applications)" },
         { label: "Core Mindset", value: "Clean Architecture & Pragmatic Problem Solving" },
-        { label: "Location", value: "India" }
+        { label: "Location", value: "GORAKHPUR" }
       ]
     },
     contact: {
@@ -94,7 +94,7 @@ export const PORTFOLIO_CONFIG = {
       linkedin: "https://www.linkedin.com/in/prince-gour-468b17315",
       instagram: "https://www.instagram.com/_prince2005__/",
       instagramUsername: "_prince2005__",
-      location: "India",
+      location: "GORAKHPUR",
       availability: "Open to Internships & Collaborative Projects"
     },
     meta: {
@@ -144,8 +144,8 @@ export const PORTFOLIO_CONFIG = {
 
   projects: [
     {
-      id: "master-sahab",
-      title: "Master Sahab — AI Student Assistant",
+      id: "Alpha AI",
+      title: "Alpha — AI Student Assistant",
       tagline: "Production-grade AI study companion engineered for conceptual clarity, exam preparation, and study management.",
       description: "A complete full-stack academic assistant that synthesizes complex textbook topics into step-by-step analogies, active recall flashcards, study schedules, and instant practice quizzes. Architected with a local-first resilience model and resilient fallback pipelines.",
       category: "AI & Web",

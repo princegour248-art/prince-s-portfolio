@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight, QrCode } from 'lucide-react';
 import { GithubIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 import { GooeyNav, type GooeyNavItem } from './GooeyNav';
+import { QrModal } from './QrModal';
 
 interface NavbarProps {
   activeSection: string;
@@ -10,6 +11,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [qrModalOpen, setQrModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { personal } = PORTFOLIO_CONFIG;
 
@@ -49,6 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
 
   // Main navigation items for GooeyNav (arranged according to page slides order)
   const navLinks: GooeyNavItem[] = useMemo(() => [
+    { label: 'Intro', href: '#landing' },
     { label: 'About', href: '#about' },
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
@@ -73,11 +76,14 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
         left: 0,
         right: 0,
         zIndex: 100,
-        backgroundColor: scrolled ? 'rgba(17, 17, 17, 0.94)' : 'rgba(17, 17, 17, 0.55)',
+        transform: scrolled ? 'translateY(0)' : 'translateY(-100%)',
+        opacity: scrolled ? 1 : 0,
+        pointerEvents: scrolled ? 'auto' : 'none',
+        backgroundColor: 'rgba(17, 17, 17, 0.94)',
         backdropFilter: 'blur(14px)',
         WebkitBackdropFilter: 'blur(14px)',
-        borderBottom: scrolled ? '1px solid #303030' : '1px solid rgba(48, 48, 48, 0.35)',
-        transition: 'background-color 0.25s ease, border-color 0.25s ease'
+        borderBottom: '1px solid #303030',
+        transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, background-color 0.25s ease, border-color 0.25s ease'
       }}
     >
       <div
@@ -92,9 +98,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
       >
         {/* Brand Monogram & Name */}
         <a
-          href="#hero"
+          href="#landing"
           className="nav-brand"
-          aria-label="Prince Gour Portfolio - Return to Hero"
+          aria-label="Prince Gour Portfolio - Return to Landing Page"
         >
           <div className="nav-logo-monogram">
             <span>PG</span>
@@ -131,6 +137,18 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
 
         {/* Right Action Cluster */}
         <div className="nav-actions">
+          {/* Quick Mobile QR Scanner Trigger */}
+          <button
+            type="button"
+            onClick={() => setQrModalOpen(true)}
+            className="qr-trigger-btn"
+            title="Scan QR to open on phone (Optimized for 2GB RAM)"
+            aria-label="Open Mobile QR Code Modal"
+          >
+            <QrCode size={14} color="#FF6A00" />
+            <span>Mobile QR</span>
+          </button>
+
           {/* Quick Social Links (Desktop) */}
           <div className="nav-social-group">
             <a
@@ -188,7 +206,20 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
             </nav>
 
             {/* Mobile Actions Drawer Footer */}
-            <div className="mobile-drawer-footer">
+            <div className="mobile-drawer-footer" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setQrModalOpen(true);
+                }}
+                className="btn btn-outline"
+                style={{ width: '100%', justifyContent: 'center', borderColor: '#FF6A00', color: '#FF8C42' }}
+              >
+                <QrCode size={16} />
+                <span>Show Mobile QR Code</span>
+              </button>
+
               <a
                 href={personal.contact.github}
                 target="_blank"
@@ -481,6 +512,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
           }
         }
       `}</style>
+
+      <QrModal isOpen={qrModalOpen} onClose={() => setQrModalOpen(false)} />
     </header>
   );
 };

@@ -129,6 +129,12 @@ input, textarea, select {
   padding-top: 96px;
   padding-bottom: 96px;
   position: relative;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 750px;
+}
+
+#landing, #hero {
+  content-visibility: visible !important;
 }
 
 @media (max-width: 768px) {

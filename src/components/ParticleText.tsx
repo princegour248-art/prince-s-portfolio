@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { getDeviceProfile } from '../utils/performance';
 import './ParticleText.css';
 
 interface ParticleTextProps {
@@ -51,13 +52,16 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const profile = getDeviceProfile();
+    const effectiveGap = profile.isLowEnd ? Math.max(gap + 2, 5) : gap;
+
     // Use container width or compute bounds based on font size
     const estimatedWidth = Math.min(window.innerWidth - 48, Math.max(260, text.length * (fontSize * 0.72)));
     const estimatedHeight = Math.round(fontSize * 1.4);
 
     setDimensions({ width: estimatedWidth, height: estimatedHeight });
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = profile.dpr;
     canvas.width = estimatedWidth * dpr;
     canvas.height = estimatedHeight * dpr;
     canvas.style.width = `${estimatedWidth}px`;
@@ -83,8 +87,8 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
 
     const newParticles: Particle[] = [];
 
-    for (let y = 0; y < estimatedHeight; y += gap) {
-      for (let x = 0; x < estimatedWidth; x += gap) {
+    for (let y = 0; y < estimatedHeight; y += effectiveGap) {
+      for (let x = 0; x < estimatedWidth; x += effectiveGap) {
         const index = (y * estimatedWidth + x) * 4;
         const alpha = data[index + 3];
 
@@ -185,13 +189,34 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
         ctx.fill();
       }
 
-      animationFrameRef.current = requestAnimationFrame(render);
+      if (isVisible) {
+        animationFrameRef.current = requestAnimationFrame(render);
+      } else {
+        animationFrameRef.current = null;
+      }
     };
+
+    // Pause offscreen to free memory & GPU on 2GB RAM phones
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0].isIntersecting;
+        if (isVisible && !animationFrameRef.current) {
+          animationFrameRef.current = requestAnimationFrame(render);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
 
     render();
 
     return () => {
       running = false;
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);

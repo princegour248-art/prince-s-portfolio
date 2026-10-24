@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FileDown, Eye, Check, FileText, Download } from 'lucide-react';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 import { generateClientResumePdf } from '../utils/generateResumePdf';
+import { StrokeText } from './StrokeText';
 import './ResumeSection.css';
 
 export const ResumeSection: React.FC = () => {
@@ -35,10 +36,12 @@ export const ResumeSection: React.FC = () => {
   return (
     <section id="resume" className="section" style={{ borderBottom: '1px solid #222222' }}>
       <div className="container">
-        {/* Section Header */}
+        {/* Section Header with Stroke Text Effect */}
         <div style={{ marginBottom: '40px' }}>
           <span className="section-tag">07 &bull; Curriculum Vitae</span>
-          <h2 className="section-title">Professional Resume</h2>
+          <h1 className="section-title stroke-heading">
+            <StrokeText text="Professional Resume" />
+          </h1>
           <p className="section-subtitle">
             An ATS-optimized, single-page professional resume structured for recruiter readability, technical screening, and engineering audits.
           </p>

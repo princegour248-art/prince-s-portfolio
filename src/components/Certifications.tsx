@@ -1,6 +1,7 @@
 import React from 'react';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 import { FlexCarousel } from './FlexCarousel';
+import { StrokeText } from './StrokeText';
 
 export const Certifications: React.FC = () => {
   const { certifications } = PORTFOLIO_CONFIG;
@@ -16,12 +17,14 @@ export const Certifications: React.FC = () => {
       }}
     >
       <div className="container">
-        {/* Section Header */}
+        {/* Section Header with Stroke Text Effect */}
         <div style={{ marginBottom: '36px' }}>
           <div style={{ marginBottom: '12px' }}>
             <span className="section-tag">05 &bull; Continuous Learning</span>
           </div>
-          <h2 className="section-title">Certifications &amp; Credentials</h2>
+          <h1 className="section-title stroke-heading">
+            <StrokeText text="Certifications & Credentials" accentText="&" />
+          </h1>
           <p className="section-subtitle">
             Interactive Flex Carousel featuring verified credentials in Artificial Intelligence, Machine Learning, and UI/UX Design.
           </p>

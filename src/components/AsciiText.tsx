@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { getDeviceProfile } from '../utils/performance';
 import './AsciiText.css';
 
 interface AsciiTextProps {
@@ -59,7 +60,8 @@ export const AsciiText: React.FC<AsciiTextProps> = ({
 
     setCanvasDimensions({ width: estimatedWidth, height: estimatedHeight });
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const profile = getDeviceProfile();
+    const dpr = profile.dpr;
     canvas.width = estimatedWidth * dpr;
     canvas.height = estimatedHeight * dpr;
     canvas.style.width = `${estimatedWidth}px`;
@@ -212,13 +214,34 @@ export const AsciiText: React.FC<AsciiTextProps> = ({
 
       ctx.restore();
 
-      animationFrameRef.current = requestAnimationFrame(render);
+      if (isVisible) {
+        animationFrameRef.current = requestAnimationFrame(render);
+      } else {
+        animationFrameRef.current = null;
+      }
     };
+
+    // Pause offscreen to conserve memory on 2GB devices
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0].isIntersecting;
+        if (isVisible && !animationFrameRef.current) {
+          animationFrameRef.current = requestAnimationFrame(render);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
 
     render();
 
     return () => {
       running = false;
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);

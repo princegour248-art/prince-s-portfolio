@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
+import { StrokeText } from './StrokeText';
 import './SocialSection.css';
 
 export const SocialSection: React.FC = () => {
@@ -17,9 +18,14 @@ export const SocialSection: React.FC = () => {
 
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [headerVisible, setHeaderVisible] = useState(false);
-  const headerRef = useRef<HTMLDivElement>(null);
+  const [activeRungs, setActiveRungs] = useState<boolean[]>([false, false, false, false]);
+  const [railProgress, setRailProgress] = useState(0);
 
-  // Fade-and-rise entrance animation
+  const headerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const rungRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Entrance animation for header
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
@@ -36,6 +42,58 @@ export const SocialSection: React.FC = () => {
 
     observer.observe(el);
     return () => observer.disconnect();
+  }, []);
+
+  // Ladder Scroll Intersection Observer: Activates rungs as user scrolls
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+
+    rungRefs.current.forEach((el, index) => {
+      if (!el) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveRungs((prev) => {
+              const updated = [...prev];
+              updated[index] = true;
+              return updated;
+            });
+          }
+        },
+        { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    // Track ladder spine progress on scroll
+    const handleScroll = () => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Start filling when container enters top half of viewport
+      const start = windowHeight * 0.8;
+      const end = -rect.height * 0.2;
+      const total = start - end;
+      const current = start - rect.top;
+
+      let progress = (current / total) * 100;
+      progress = Math.max(0, Math.min(100, progress));
+      setRailProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      observers.forEach((obs) => obs.disconnect());
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const handleCopy = (text: string, key: string) => {
@@ -101,10 +159,84 @@ export const SocialSection: React.FC = () => {
     }
   ];
 
+  const renderCard = (platform: typeof platforms[0], index: number) => {
+    const Icon = platform.icon;
+    const isCopied = copiedKey === platform.id;
+
+    return (
+      <div className="social-platform-card">
+        {/* Top Identity Block */}
+        <div>
+          <div className="social-ladder-step-indicator">
+            Step 0{index + 1} &bull; Ladder Rung
+          </div>
+
+          <div className="social-card-header">
+            <a
+              href={platform.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-card-identity"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <div className="social-platform-icon-box">
+                <Icon size={22} />
+              </div>
+              <div className="social-card-titles">
+                <h3 className="social-platform-name">{platform.name}</h3>
+                <span className="social-platform-handle">{platform.handle}</span>
+              </div>
+            </a>
+
+            <span className="social-badge-pill">{platform.badge}</span>
+          </div>
+
+          {/* Description */}
+          <p className="social-card-description" style={{ marginTop: '16px' }}>
+            {platform.description}
+          </p>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="social-card-actions">
+          <a
+            href={platform.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-btn social-btn-primary"
+          >
+            <span>{platform.primaryActionText}</span>
+            <ArrowUpRight size={15} />
+          </a>
+
+          <button
+            type="button"
+            className="social-btn social-btn-secondary"
+            onClick={() => handleCopy(platform.copyValue, platform.id)}
+            title={isCopied ? 'Copied to clipboard' : `Copy ${platform.name}`}
+            aria-label={`Copy ${platform.name} link`}
+          >
+            {isCopied ? (
+              <>
+                <Check size={14} color="#22C55E" />
+                <span style={{ color: '#22C55E' }}>Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy size={14} color="#FF6A00" />
+                <span>{platform.copyLabel}</span>
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <section id="social" className="section social-section">
       <div className="container">
-        {/* Section Header */}
+        {/* Section Header with Stroke Text Effect */}
         <div
           ref={headerRef}
           className={`social-header-reveal ${headerVisible ? 'is-visible' : ''}`}
@@ -112,80 +244,71 @@ export const SocialSection: React.FC = () => {
           <div style={{ marginBottom: '12px' }}>
             <span className="section-tag">08 &bull; Digital Presence &amp; Network</span>
           </div>
-          <h2 className="section-title">Connect Across Platforms.</h2>
+          <h1 className="section-title stroke-heading">
+            <StrokeText text="Connect Across Platforms." />
+          </h1>
           <p className="section-subtitle">
             Follow my technical journey, explore source repositories, or connect for professional collaborations.
           </p>
         </div>
 
-        {/* 2x2 Platform Cards Grid */}
-        <div className="social-platforms-grid">
-          {platforms.map((platform) => {
-            const Icon = platform.icon;
-            const isCopied = copiedKey === platform.id;
+        {/* Futuristic Ladder Scroll Animation Track */}
+        <div ref={containerRef} className="social-ladder-container">
+          {/* Vertical Ladder Spine & Progress Indicator */}
+          <div className="social-ladder-spine">
+            <div
+              className="social-ladder-progress-rail"
+              style={{ height: `${railProgress}%` }}
+            />
+          </div>
+          <div className="social-ladder-cap social-ladder-cap-top" />
+          <div className="social-ladder-cap social-ladder-cap-bottom" />
+
+          {/* Ladder Rungs Sequence */}
+          {platforms.map((platform, idx) => {
+            const isLeft = idx % 2 === 0;
+            const isActive = activeRungs[idx];
 
             return (
-              <div key={platform.id} className="social-platform-card">
-                {/* Top Identity Block */}
-                <div>
-                  <div className="social-card-header">
-                    <a
-                      href={platform.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-card-identity"
-                      style={{ textDecoration: 'none', color: 'inherit' }}
-                    >
-                      <div className="social-platform-icon-box">
-                        <Icon size={22} />
-                      </div>
-                      <div className="social-card-titles">
-                        <h3 className="social-platform-name">{platform.name}</h3>
-                        <span className="social-platform-handle">{platform.handle}</span>
-                      </div>
-                    </a>
-
-                    <span className="social-badge-pill">{platform.badge}</span>
+              <div
+                key={platform.id}
+                ref={(el) => {
+                  rungRefs.current[idx] = el;
+                }}
+                className={`social-ladder-rung ${isLeft ? 'social-ladder-rung-left' : 'social-ladder-rung-right'} ${
+                  isActive ? 'is-active' : ''
+                }`}
+              >
+                {/* Left Column */}
+                {isLeft ? (
+                  <div className="social-ladder-card-wrapper">
+                    {renderCard(platform, idx)}
                   </div>
+                ) : (
+                  <div className="social-ladder-empty" aria-hidden="true" />
+                )}
 
-                  {/* Description */}
-                  <p className="social-card-description" style={{ marginTop: '16px' }}>
-                    {platform.description}
-                  </p>
+                {/* Center Column: Ladder Node & Branching Beam */}
+                <div className="social-ladder-center">
+                  <div
+                    className={`social-ladder-beam ${
+                      isLeft ? 'social-ladder-beam-left' : 'social-ladder-beam-right'
+                    }`}
+                  />
+                  <div className="social-ladder-node">
+                    <span className="social-ladder-node-number">0{idx + 1}</span>
+                    <span className="social-ladder-node-dot" />
+                  </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="social-card-actions">
-                  <a
-                    href={platform.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-btn social-btn-primary"
-                  >
-                    <span>{platform.primaryActionText}</span>
-                    <ArrowUpRight size={15} />
-                  </a>
-
-                  <button
-                    type="button"
-                    className="social-btn social-btn-secondary"
-                    onClick={() => handleCopy(platform.copyValue, platform.id)}
-                    title={isCopied ? 'Copied to clipboard' : `Copy ${platform.name}`}
-                    aria-label={`Copy ${platform.name} link`}
-                  >
-                    {isCopied ? (
-                      <>
-                        <Check size={14} color="#22C55E" />
-                        <span style={{ color: '#22C55E' }}>Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy size={14} color="#FF6A00" />
-                        <span>{platform.copyLabel}</span>
-                      </>
-                    )}
-                  </button>
-                </div>
+                {/* Right Column */}
+                {!isLeft ? (
+                  <div className="social-ladder-card-wrapper">
+                    {renderCard(platform, idx)}
+                  </div>
+                ) : (
+                  <div className="social-ladder-empty" aria-hidden="true" />
+                )}
               </div>
             );
           })}

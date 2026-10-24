@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { RotateCcw, Sparkles } from 'lucide-react';
+import { getDeviceProfile } from '../utils/performance';
 import frontCardImg from '../assets/id-card-front.jpeg';
 import backCardImg from '../assets/id-card-back.jpeg';
 import './Lanyard.css';
@@ -83,21 +84,27 @@ export const Lanyard: React.FC<LanyardProps> = ({ className = '' }) => {
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
     camera.position.set(0, -0.05, 7.8);
 
+    const profile = getDeviceProfile();
+    const isLow = profile.isLowEnd;
+
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
         alpha: true,
-        antialias: true,
-        powerPreference: 'high-performance'
+        antialias: !isLow,
+        powerPreference: isLow ? 'default' : 'high-performance',
+        precision: isLow ? 'mediump' : 'highp'
       });
     } catch (e) {
       console.warn('WebGL initialization failed:', e);
       return;
     }
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.setPixelRatio(profile.dpr);
+    renderer.shadowMap.enabled = profile.enableShadows;
+    if (profile.enableShadows) {
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    }
     renderer.domElement.className = 'lanyard-canvas';
     container.appendChild(renderer.domElement);
 
@@ -107,7 +114,7 @@ export const Lanyard: React.FC<LanyardProps> = ({ className = '' }) => {
 
     const mainLight = new THREE.DirectionalLight(0xffffff, 2.5);
     mainLight.position.set(4, 7, 8);
-    mainLight.castShadow = true;
+    mainLight.castShadow = profile.enableShadows;
     scene.add(mainLight);
 
     // Soft warm accent rim light
@@ -122,19 +129,19 @@ export const Lanyard: React.FC<LanyardProps> = ({ className = '' }) => {
     // 3. Textures
     const textureLoader = new THREE.TextureLoader();
 
-    // Front ID card texture
+    // Front ID card texture (optimized for low-RAM budgets)
     const frontTex = textureLoader.load(frontCardImg);
     frontTex.colorSpace = THREE.SRGBColorSpace;
-    frontTex.minFilter = THREE.LinearMipmapLinearFilter;
+    frontTex.minFilter = isLow ? THREE.LinearFilter : THREE.LinearMipmapLinearFilter;
     frontTex.magFilter = THREE.LinearFilter;
-    frontTex.generateMipmaps = true;
+    frontTex.generateMipmaps = !isLow;
 
     // Back ID card texture (flipped horizontally so when card flips 180 deg it reads normally)
     const backTex = textureLoader.load(backCardImg);
     backTex.colorSpace = THREE.SRGBColorSpace;
-    backTex.minFilter = THREE.LinearMipmapLinearFilter;
+    backTex.minFilter = isLow ? THREE.LinearFilter : THREE.LinearMipmapLinearFilter;
     backTex.magFilter = THREE.LinearFilter;
-    backTex.generateMipmaps = true;
+    backTex.generateMipmaps = !isLow;
     backTex.wrapS = THREE.RepeatWrapping;
     backTex.repeat.x = -1;
     backTex.offset.x = 1;
