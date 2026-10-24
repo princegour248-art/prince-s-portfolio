@@ -3,6 +3,7 @@ import { FileDown, Eye, Check, FileText, Download } from 'lucide-react';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 import { generateClientResumePdf } from '../utils/generateResumePdf';
 import { StrokeText } from './StrokeText';
+import { getAssetUrl } from '../utils/assetUrl';
 import './ResumeSection.css';
 
 export const ResumeSection: React.FC = () => {
@@ -216,7 +217,7 @@ export const ResumeSection: React.FC = () => {
               {/* Working Download Buttons */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <a
-                  href="/prince-gour-resume.pdf"
+                  href={getAssetUrl('prince-gour-resume.pdf')}
                   download="prince-gour-resume.pdf"
                   className="btn btn-primary"
                   style={{ width: '100%' }}
@@ -237,7 +238,7 @@ export const ResumeSection: React.FC = () => {
                 </button>
 
                 <a
-                  href="/prince-gour-resume.pdf"
+                  href={getAssetUrl('prince-gour-resume.pdf')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-outline"

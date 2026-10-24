@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { X, Check, Copy, Smartphone, Zap } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetUrl';
 import './QrModal.css';
 
 interface QrModalProps {
@@ -10,7 +11,7 @@ interface QrModalProps {
 export const QrModal: React.FC<QrModalProps> = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
   const liveUrl = 'https://princegour248-art.github.io/prince-s-portfolio/';
-  const qrImgSrc = `${import.meta.env.BASE_URL}portfolio-qr.png`;
+  const qrImgSrc = getAssetUrl('portfolio-qr.png');
 
   // Close on Escape key
   const handleKeyDown = useCallback(
@@ -83,9 +84,7 @@ export const QrModal: React.FC<QrModalProps> = ({ isOpen, onClose }) => {
             onError={(e) => {
               // Fallback to relative path if base url differs
               const target = e.currentTarget;
-              if (!target.src.endsWith('/portfolio-qr.png')) {
-                target.src = '/portfolio-qr.png';
-              }
+              target.src = getAssetUrl('portfolio-qr.png');
             }}
           />
         </div>

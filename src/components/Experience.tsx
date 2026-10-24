@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { PORTFOLIO_CONFIG, type ExperienceItem } from '../data/portfolioData';
 import { StrokeText } from './StrokeText';
+import { getAssetUrl } from '../utils/assetUrl';
 import './Experience.css';
 
 interface FolderConfig {
@@ -325,7 +326,7 @@ export const Experience: React.FC = () => {
                           aria-label={`Inspect ${item.company} official document`}
                         >
                           <img
-                            src={item.offerLetterImage}
+                            src={getAssetUrl(item.offerLetterImage)}
                             alt={`${item.company} Offer Letter Document`}
                             className="archive-doc-thumb"
                             loading="lazy"
@@ -366,7 +367,7 @@ export const Experience: React.FC = () => {
 
                         {item.offerLetterPdf ? (
                           <a
-                            href={item.offerLetterPdf}
+                            href={getAssetUrl(item.offerLetterPdf)}
                             download
                             className="archive-btn archive-btn-outline"
                             title="Download official PDF document"
@@ -376,7 +377,7 @@ export const Experience: React.FC = () => {
                           </a>
                         ) : item.offerLetterImage ? (
                           <a
-                            href={item.offerLetterImage}
+                            href={getAssetUrl(item.offerLetterImage)}
                             download
                             className="archive-btn archive-btn-outline"
                             title="Download document image"
@@ -436,7 +437,7 @@ export const Experience: React.FC = () => {
             <div className="document-modal-body">
               {viewerDoc.offerLetterImage && (
                 <img
-                  src={viewerDoc.offerLetterImage}
+                  src={getAssetUrl(viewerDoc.offerLetterImage)}
                   alt={`${viewerDoc.company} Official Document`}
                   className="document-modal-image"
                 />
@@ -453,7 +454,7 @@ export const Experience: React.FC = () => {
               <div className="document-modal-footer-actions">
                 {viewerDoc.offerLetterPdf && (
                   <a
-                    href={viewerDoc.offerLetterPdf}
+                    href={getAssetUrl(viewerDoc.offerLetterPdf)}
                     download
                     className="archive-btn archive-btn-outline"
                     style={{ fontSize: '12px', padding: '7px 14px' }}
@@ -465,7 +466,7 @@ export const Experience: React.FC = () => {
 
                 {viewerDoc.offerLetterPdf && (
                   <a
-                    href={viewerDoc.offerLetterPdf}
+                    href={getAssetUrl(viewerDoc.offerLetterPdf)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="archive-btn archive-btn-outline"

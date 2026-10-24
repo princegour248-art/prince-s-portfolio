@@ -12,6 +12,7 @@ import {
   KeyRound
 } from 'lucide-react';
 import type { CertificationItem } from '../data/portfolioData';
+import { getAssetUrl } from '../utils/assetUrl';
 import './FlexCarousel.css';
 
 interface FlexCarouselProps {
@@ -126,7 +127,7 @@ export const FlexCarousel: React.FC<FlexCarouselProps> = ({
               <div
                 className="flex-card-bg-layer"
                 style={{
-                  backgroundImage: item.image ? `url(${item.image})` : undefined,
+                  backgroundImage: item.image ? `url(${getAssetUrl(item.image)})` : undefined,
                   backgroundColor: !item.image ? '#181818' : undefined
                 }}
               />
@@ -169,7 +170,7 @@ export const FlexCarousel: React.FC<FlexCarouselProps> = ({
                     title="Click to inspect full certificate"
                   >
                     <img
-                      src={item.image}
+                      src={getAssetUrl(item.image)}
                       alt={`${item.title} Certificate Issued by ${item.issuer}`}
                       className="flex-card-preview-img"
                       loading="lazy"
@@ -319,7 +320,7 @@ export const FlexCarousel: React.FC<FlexCarouselProps> = ({
             {/* Modal Image Body */}
             <div className="cert-modal-body">
               <img
-                src={modalItem.image}
+                src={getAssetUrl(modalItem.image)}
                 alt={`${modalItem.title} issued by ${modalItem.issuer}`}
                 className="cert-modal-full-img"
               />
@@ -342,7 +343,7 @@ export const FlexCarousel: React.FC<FlexCarouselProps> = ({
               </div>
 
               <a
-                href={modalItem.image}
+                href={getAssetUrl(modalItem.image)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary btn-sm"

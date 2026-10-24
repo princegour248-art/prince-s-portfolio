@@ -4,6 +4,7 @@ import { GithubIcon, LinkedinIcon } from './icons';
 import { PORTFOLIO_CONFIG } from '../data/portfolioData';
 import { Lanyard } from './Lanyard';
 import { TechText } from './TechText';
+import { getAssetUrl } from '../utils/assetUrl';
 
 export const Hero: React.FC = () => {
   const { personal } = PORTFOLIO_CONFIG;
@@ -113,7 +114,7 @@ export const Hero: React.FC = () => {
 
               {/* 2. Download Resume */}
               <a
-                href="/prince-gour-resume.pdf"
+                href={getAssetUrl('prince-gour-resume.pdf')}
                 download="prince-gour-resume.pdf"
                 className="btn btn-secondary btn-lg"
               >
