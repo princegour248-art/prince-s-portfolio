@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Prince Gour — Developer Portfolio + Resume + QR Code
 
 A production-ready, minimal, professional personal developer portfolio for **Prince Gour** (AI Enthusiast | Aspiring Software Developer | Web Developer).
@@ -180,3 +181,6 @@ node scripts/verifyPortfolio.cjs
   ```bash
   npm run generate:qr https://your-custom-portfolio-url.com
   ```
+=======
+# prince-gour-portfolio
+>>>>>>> 5f61a25c9a42145cacffb6c1b5b3ba91984159c8
