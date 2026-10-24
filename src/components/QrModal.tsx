@@ -9,7 +9,7 @@ interface QrModalProps {
 
 export const QrModal: React.FC<QrModalProps> = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
-  const liveUrl = 'https://princegour248-art.github.io/prince-gour-portfolio/';
+  const liveUrl = 'https://princegour248-art.github.io/prince-s-portfolio/';
   const qrImgSrc = `${import.meta.env.BASE_URL}portfolio-qr.png`;
 
   // Close on Escape key

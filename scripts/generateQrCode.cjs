@@ -40,7 +40,7 @@ function getLocalWifiIp() {
 }
 
 // Canonical live URL
-const targetUrl = process.argv[2] || 'https://princegour248-art.github.io/prince-gour-portfolio/';
+const targetUrl = process.argv[2] || 'https://princegour248-art.github.io/prince-s-portfolio/';
 const currentIp = getLocalWifiIp();
 const localWifiUrl = `http://${currentIp}:5173`;
 

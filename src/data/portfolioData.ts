@@ -98,7 +98,7 @@ export const PORTFOLIO_CONFIG = {
       availability: "Open to Internships & Collaborative Projects"
     },
     meta: {
-      canonicalUrl: "https://princegour248-art.github.io/prince-gour-portfolio/",
+      canonicalUrl: "https://princegour248-art.github.io/prince-s-portfolio/",
       title: "Prince Gour | AI Enthusiast & Software Developer Portfolio",
       description: "Official portfolio of Prince Gour: BCA student, software developer, and AI enthusiast showcasing real projects, technical skills, certifications, and resume."
     }
@@ -144,8 +144,8 @@ export const PORTFOLIO_CONFIG = {
 
   projects: [
     {
-      id: "Alpha AI",
-      title: "Alpha — AI Student Assistant",
+      id: "master-sahab",
+      title: "Master Sahab — AI Student Assistant",
       tagline: "Production-grade AI study companion engineered for conceptual clarity, exam preparation, and study management.",
       description: "A complete full-stack academic assistant that synthesizes complex textbook topics into step-by-step analogies, active recall flashcards, study schedules, and instant practice quizzes. Architected with a local-first resilience model and resilient fallback pipelines.",
       category: "AI & Web",

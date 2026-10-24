@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Prince Gour — Developer Portfolio + Resume + QR Code
 
 A production-ready, minimal, professional personal developer portfolio for **Prince Gour** (AI Enthusiast | Aspiring Software Developer | Web Developer).
@@ -150,7 +149,7 @@ node scripts/verifyPortfolio.cjs
 ## 🌐 8. Free Deployment Instructions
 
 ### Option A: Free Vercel Deployment (Recommended — 2 Minutes)
-1. Push your repository to GitHub (`https://github.com/princegour248-art/portfolio`).
+1. Push your repository to GitHub (`https://github.com/princegour248-art/prince-s-portfolio`).
 2. Go to [Vercel](https://vercel.com) and click **"Add New Project"**.
 3. Import your `portfolio` repository.
 4. Keep the default settings (Framework: Vite, Root: `./`, Build command: `npm run build`, Output: `dist`).
@@ -164,7 +163,7 @@ node scripts/verifyPortfolio.cjs
 4. Set **Source** to **GitHub Actions**.
 5. The pre-configured `.github/workflows/deploy.yml` workflow will automatically trigger, build the website, generate the resume PDF, and deploy your portfolio to:
    ```
-   https://princegour248-art.github.io/portfolio/
+   https://princegour248-art.github.io/prince-s-portfolio/
    ```
 6. The generated QR codes automatically encode this canonical URL so scanning them directs immediately to your live site!
 
@@ -181,6 +180,3 @@ node scripts/verifyPortfolio.cjs
   ```bash
   npm run generate:qr https://your-custom-portfolio-url.com
   ```
-=======
-# prince-gour-portfolio
->>>>>>> 5f61a25c9a42145cacffb6c1b5b3ba91984159c8
